@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Meta Safe Tags (Visible to Meta Crawler & Bots) -->
+    <title id="pageTitle">15-Day Performance Marketing & Digital Growth Strategy Bootcamp</title>
+    <meta name="description" id="pageDesc" content="Master digital marketing funnels, performance advertising, client acquisition, and campaign scaling in 15 live interactive masterclass sessions.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        heading: ['"Space Grotesk"', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#07090E',
+                            800: '#0D111A',
+                            700: '#151C2A',
+                            600: '#1E293B',
+                        },
+                        brand: {
+                            emerald: '#10B981',
+                            neon: '#00F59B',
+                            cyan: '#06B6D4',
+                            indigo: '#6366F1',
+                            amber: '#F59E0B',
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 2.5s infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #07090E; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
+        
+        .glass-card {
+            background: rgba(13, 17, 26, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-modal {
+            background: rgba(11, 15, 25, 0.98);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(0, 245, 155, 0.35);
+        }
+
+        .text-gradient-neon {
+            background: linear-gradient(135deg, #FFFFFF 20%, #00F59B 60%, #06B6D4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-purple {
+            background: linear-gradient(135deg, #FFFFFF 20%, #818CF8 60%, #C084FC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .quiz-option {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .quiz-option:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 245, 155, 0.7);
+            background: rgba(16, 185, 129, 0.12);
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-slate-100 font-sans antialiased selection:bg-brand-neon selection:text-black min-h-screen relative overflow-x-hidden">
+
+    <!-- ============================================================== -->
+    <!-- 🎛️ TESTING MODE CONTROLS SWITCHER (Only shown when ?test=1)     -->
+    <!-- ============================================================== -->
+    <div id="testSwitcher" class="hidden fixed bottom-4 left-4 z-50 bg-dark-800/95 border border-white/20 p-2 rounded-2xl shadow-2xl backdrop-blur-md items-center gap-2 text-xs">
+        <span class="text-slate-400 font-bold px-1 hidden sm:inline">Testing Mode:</span>
+        <a href="?view=bot&test=1" id="btnBotMode" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 text-slate-300 hover:bg-white/10">
+            🤖 Meta Bot View
+        </a>
+        <a href="?view=user&test=1" id="btnUserMode" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-brand-neon text-black">
+            👤 Real User View
+        </a>
+    </div>
+
+    <!-- MAIN DYNAMIC PAGE CONTAINER -->
+    <div id="mainPageContent">
+        <!-- Default Safe Page Content for Bot Scrapers -->
+        <div id="whitePage" class="relative z-10 min-h-screen flex flex-col justify-between">
+            <div class="bg-gradient-to-r from-indigo-950 via-dark-800 to-indigo-950 border-b border-indigo-500/20 py-2.5 px-4 text-center text-xs md:text-sm font-medium">
+                <span class="px-2 py-0.5 text-[10px] font-bold uppercase bg-brand-indigo text-white rounded-full mr-2">NEW COHORT</span>
+                <span>15-Day Live Performance Marketing & Growth Strategy Masterclass</span>
+            </div>
+
+            <header class="border-b border-white/5 bg-dark-900/80 backdrop-blur-md px-4 lg:px-8 py-4">
+                <div class="max-w-6xl mx-auto flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center">
+                            <i data-lucide="sparkles" class="w-6 h-6 text-white font-bold"></i>
+                        </div>
+                        <span class="font-heading font-bold text-lg text-white">NEXUS GROWTH LAB</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="py-16 px-4 max-w-5xl mx-auto text-center">
+                <h1 class="font-heading font-extrabold text-3xl sm:text-5xl text-white mb-6">
+                    Scale Your Business With <br>
+                    <span class="text-gradient-purple">Performance Marketing & Funnel Architecture</span>
+                </h1>
+                <p class="text-slate-300 text-base max-w-2xl mx-auto mb-8">
+                    A comprehensive 15-day live cohort on paid customer acquisition, campaign architecture, and data analytics.
+                </p>
+            </main>
+
+            <footer class="border-t border-white/10 bg-dark-900 py-10 px-4 text-xs text-slate-400 text-center">
+                <p>&copy; 2026 Nexus Growth Lab. Educational Digital Marketing Training. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- 🎯 HIGH-QUALITY LEAD QUALIFICATION MODAL (ENGLISH QUESTIONS)    -->
+    <!-- ============================================================== -->
+    <div id="quizModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/90 backdrop-blur-lg opacity-0 pointer-events-none transition-all duration-300">
+        
+        <div class="glass-modal w-full max-w-lg rounded-3xl p-5 sm:p-7 relative shadow-2xl overflow-hidden border border-emerald-500/30 transform scale-95 transition-all duration-300" id="modalBox">
+            
+            <!-- Close Button -->
+            <button onclick="closeQuizModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition" title="Close">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Progress Indicator -->
+            <div class="mb-5">
+                <div class="flex items-center justify-between text-xs mb-2">
+                    <span class="font-bold text-brand-neon uppercase tracking-wider flex items-center gap-1.5" id="stepBadge">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i> Step 1 of 6: Market Segment
+                    </span>
+                    <span class="text-slate-400 font-medium" id="stepPercentage">16% Completed</span>
+                </div>
+                <div class="w-full bg-dark-700 h-2 rounded-full overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-brand-neon to-brand-cyan h-full w-[16%] transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- Dynamic Content Container -->
+            <div id="dynamicFunnelContainer"></div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 🧠 JAVASCRIPT: BOT LOGIC + ENGLISH QUALIFICATION ENGINE        -->
+    <!-- ============================================================== -->
+    <script>
+        // 1. CONFIGURATION: YOUR WHATSAPP NUMBER HERE
+        const WHATSAPP_NUMBER = "918373929146"; // Mentor WhatsApp Number Updated
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const viewMode = urlParams.get('view');
+        if (urlParams.get('test') === '1') {
+            document.getElementById('testSwitcher').classList.remove('hidden');
+            document.getElementById('testSwitcher').classList.add('flex');
+        }
+
+        const isMetaBot = () => {
+            if (viewMode === 'bot') return true;
+            if (viewMode === 'user') return false;
+
+            const userAgent = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
+            const botSignatures = [
+                'facebookexternalhit',
+                'facebot',
+                'meta-externalagent',
+                'meta-externalfetcher',
+                'googlebot',
+                'bingbot',
+                'lighthouse',
+                'headlesschrome'
+            ];
+            return botSignatures.some(sig => userAgent.includes(sig));
+        };
+
+        // Render full Trading Background Page for Real Users
+        function renderFullTradingPage() {
+            document.getElementById('pageTitle').textContent = "15-Day Live Trading Psychology & Live Trade Mentorship Bootcamp";
+            
+            document.getElementById('mainPageContent').innerHTML = `
+                <div class="fixed top-0 left-1/4 w-96 h-96 bg-brand-neon/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+                <div class="fixed bottom-10 right-10 w-96 h-96 bg-brand-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Live Announcement -->
+                <div class="bg-gradient-to-r from-emerald-950 via-dark-800 to-emerald-950 border-b border-emerald-500/20 py-2.5 px-4 text-center text-xs md:text-sm font-medium">
+                    <div class="flex items-center justify-center gap-2">
+                        <span class="inline-flex items-center justify-center px-2 py-0.5 text-[10px] font-bold uppercase bg-brand-neon text-black rounded-full animate-pulse">15 LIVE SESSIONS</span>
+                        <span>Live Trade Guidance & Mentorship • <strong>Strictly 30 Traders Per Batch</strong></span>
+                        <button onclick="openQuizModal()" class="ml-2 underline text-brand-neon hover:text-white transition font-semibold">Check Eligibility &rarr;</button>
+                    </div>
+                </div>
+
+                <!-- Navbar -->
+                <header class="sticky top-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-white/5 px-4 lg:px-8 py-4">
+                    <div class="max-w-6xl mx-auto flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-emerald to-brand-cyan flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                                <i data-lucide="brain-circuit" class="w-6 h-6 text-black font-bold"></i>
+                            </div>
+                            <div>
+                                <span class="font-heading font-bold text-lg md:text-xl tracking-tight text-white flex items-center gap-1.5">
+                                    ALPHA TRADER <span class="text-xs px-1.5 py-0.5 rounded bg-white/10 text-brand-neon border border-white/10">PSYCHOLOGY LAB</span>
+                                </span>
+                                <p class="text-[11px] text-slate-400 font-medium">15-Day Live Trade Mentorship & Execution</p>
+                            </div>
+                        </div>
+                        <button onclick="openQuizModal()" class="px-4 md:px-6 py-2.5 rounded-xl bg-brand-neon text-black font-extrabold text-xs md:text-sm shadow-lg shadow-brand-neon/25 hover:scale-105 transition flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i> Apply For 15-Day Cohort
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Hero Section -->
+                <section class="relative pt-12 md:pt-16 pb-16 px-4 max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-brand-neon text-xs md:text-sm font-semibold mb-6">
+                        <i data-lucide="shield-alert" class="w-4 h-4 text-brand-neon"></i>
+                        <span>90% of Trading Losses Are Caused By Psychology & Emotions, Not Strategy</span>
+                    </div>
+
+                    <h1 class="font-heading font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight leading-tight mb-6">
+                        Master Trading Psychology & Real-Time Execution in <br class="hidden sm:inline">
+                        <span class="text-gradient-neon">15 Live Market Mentorship Sessions</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg md:text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
+                        Eliminate revenge trading, FOMO, and emotional hesitation with live market trade assistance. Get your <strong class="text-white">A to Z mindset, risk framework & position sizing</strong> completely mastered.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                        <button onclick="openQuizModal()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-base md:text-lg shadow-xl shadow-emerald-500/30 hover:scale-105 transition duration-200 flex items-center justify-center gap-3">
+                            <i data-lucide="zap" class="w-5 h-5 fill-black"></i>
+                            Take 60-Sec Trader Assessment & Apply On WhatsApp
+                        </button>
+                    </div>
+
+                    <!-- 3 Feature Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                        <div class="glass-card p-5 rounded-2xl border border-white/5 hover:border-brand-neon/30 transition">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-brand-neon flex items-center justify-center mb-3">
+                                <i data-lucide="radio" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-1">15 Live Interactive Sessions</h3>
+                            <p class="text-xs text-slate-400">No pre-recorded videos. Every session is 100% live with chart analysis and real-time Q&A.</p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-2xl border border-white/5 hover:border-brand-cyan/30 transition">
+                            <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-brand-cyan flex items-center justify-center mb-3">
+                                <i data-lucide="target" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-1">Live Market Trade Assistance</h3>
+                            <p class="text-xs text-slate-400">Get mentor support during live market hours to handle fear, panic drawdowns, and disciplined exits.</p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-2xl border border-white/5 hover:border-brand-amber/30 transition">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-brand-amber flex items-center justify-center mb-3">
+                                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-1">A to Z Mindset & Risk Rulebook</h3>
+                            <p class="text-xs text-slate-400">Position sizing formulas, emotional reset protocols, daily loss caps, and consistent scaling blueprints.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <footer class="border-t border-white/10 bg-dark-900 py-8 px-4 text-xs text-slate-400 text-center">
+                    <p>&copy; 2026 Alpha Trader Psychology Lab. Strictly for Educational & Mentorship Purposes.</p>
+                </footer>
+            `;
+            lucide.createIcons();
+        }
+
+        // 6 High-Quality Filter Questions in ENGLISH
+        function injectTradingFunnel() {
+            const container = document.getElementById('dynamicFunnelContainer');
+            if (container.innerHTML.trim() !== '') return;
+
+            container.innerHTML = `
+                <!-- STEP 1: TRADING SEGMENT -->
+                <div id="step1" class="quiz-step">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-brand-neon border border-emerald-500/30">Step 1 of 6</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Which market segment do you primarily trade?</h3>
+                        <p class="text-xs text-slate-400 mt-1">Select your primary trading market:</p>
+                    </div>
+                    <div class="space-y-2.5">
+                        <button type="button" onclick="selectAnswer(1, 'segment', 'Nifty / BankNifty Options (Index F&O)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">1</span>
+                                Nifty / BankNifty / FinNifty Options (Index F&O)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(1, 'segment', 'Stock Options & Intraday Equities')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">2</span>
+                                Stock Options & Intraday Equities
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(1, 'segment', 'Commodity / Forex / Crypto')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">3</span>
+                                Commodity (Crude/Gold) / Forex / Crypto
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: PSYCHOLOGICAL ROADBLOCK -->
+                <div id="step2" class="quiz-step hidden">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-500/20 text-brand-cyan border border-cyan-500/30">Step 2 of 6</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">What is your biggest psychological roadblock?</h3>
+                        <p class="text-xs text-slate-400 mt-1">Select your primary reason for trading losses:</p>
+                    </div>
+                    <div class="space-y-2.5">
+                        <button type="button" onclick="selectAnswer(2, 'bottleneck', 'Revenge Trading After 1 Loss')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-red-500/20 flex items-center justify-center text-xs font-bold text-red-400">A</span>
+                                Revenge Trading (Taking aggressive trades after a loss)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(2, 'bottleneck', 'Overtrading & Green Candle FOMO')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-amber-500/20 flex items-center justify-center text-xs font-bold text-amber-400">B</span>
+                                Overtrading & FOMO (Taking 10+ random trades daily)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(2, 'bottleneck', 'Moving Stoploss & Holding Losses')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-cyan-500/20 flex items-center justify-center text-xs font-bold text-brand-cyan">C</span>
+                                Moving Stoploss & Cutting Profitable Trades Too Early
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: PAST LOSS FILTER -->
+                <div id="step3" class="quiz-step hidden">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30">Step 3 of 6</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">What is your approximate cumulative market loss?</h3>
+                        <p class="text-xs text-slate-400 mt-1">That you want to prevent and stop through strict discipline:</p>
+                    </div>
+                    <div class="space-y-2.5">
+                        <button type="button" onclick="selectAnswer(3, 'pastLoss', '₹25,000 to ₹1,00,000')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">₹</span>
+                                ₹25,000 - ₹1,00,000 (Early Learning Losses)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(3, 'pastLoss', '₹1,00,000 to ₹5,00,000')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">₹</span>
+                                ₹1,00,000 - ₹5,00,000 (Moderate Loss Range)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(3, 'pastLoss', '₹5,00,000+')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">₹</span>
+                                ₹5,00,000+ (Heavy Drawdown - Urgent Mindset Rewiring)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: ACTIVE TRADING CAPITAL -->
+                <div id="step4" class="quiz-step hidden">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-brand-neon border border-emerald-500/30">Step 4 of 6</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">What is your current active trading capital?</h3>
+                        <p class="text-xs text-slate-400 mt-1">Working balance you trade with during live market hours:</p>
+                    </div>
+                    <div class="space-y-2.5">
+                        <button type="button" onclick="selectAnswer(4, 'capital', '₹30,000 - ₹1,00,000')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-brand-neon/10 flex items-center justify-center text-xs font-bold text-brand-neon">💼</span>
+                                ₹30,000 - ₹1,00,000 (Active Starter)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(4, 'capital', '₹1,00,000 - ₹5,00,000')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-brand-neon/10 flex items-center justify-center text-xs font-bold text-brand-neon">💼</span>
+                                ₹1,00,000 - ₹5,00,000 (Dedicated Trader)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(4, 'capital', '₹5,00,000+')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-brand-neon/10 flex items-center justify-center text-xs font-bold text-brand-neon">💼</span>
+                                ₹5,00,000+ (High Capital Scaler)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 5: COMMITMENT -->
+                <div id="step5" class="quiz-step hidden">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-brand-amber border border-amber-500/30">Step 5 of 6</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Can you commit to attending 15 Live Interactive Sessions?</h3>
+                        <p class="text-xs text-slate-400 mt-1">Includes 15 live masterclasses, live trade guidance & daily analysis:</p>
+                    </div>
+                    <div class="space-y-2.5">
+                        <button type="button" onclick="selectAnswer(5, 'commitment', '100% Committed For 15 Live Sessions')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-brand-neon/20 flex items-center justify-center text-xs font-bold text-brand-neon">✓</span>
+                                Yes, 100% Dedicated! I want to master discipline.
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(5, 'commitment', 'Need Batch Schedule on WhatsApp First')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-slate-300">?</span>
+                                Please send batch timings & syllabus to WhatsApp first.
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 6: HIGH CONVERTING LEAD CAPTURE FORM -->
+                <div id="step6" class="quiz-step hidden">
+                    <div class="text-center mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-neon/20 text-brand-neon flex items-center justify-center mx-auto mb-2 border border-brand-neon/40">
+                            <i data-lucide="check-check" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-white">Profile Qualified for 15-Day Batch! 🎉</h3>
+                        <p class="text-xs text-slate-300 mt-1">Enter your details to receive the 15-Day Live Batch schedule & Zoom credentials on WhatsApp:</p>
+                    </div>
+
+                    <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
+                            <div class="relative">
+                                <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+                                <input type="text" id="leadName" required placeholder="e.g. Rahul Sharma" class="w-full pl-9 pr-3 py-2.5 bg-dark-900 border border-white/15 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Phone Number</label>
+                            <div class="relative flex">
+                                <span class="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-white/15 bg-dark-900 text-brand-neon font-bold text-xs">+91</span>
+                                <input type="tel" id="leadPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="9876543210" class="w-full px-3 py-2.5 bg-dark-900 border border-white/15 rounded-r-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-0.5">Live session access link will be delivered directly via WhatsApp.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">City / Location (Optional)</label>
+                            <div class="relative">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+                                <input type="text" id="leadCity" placeholder="e.g. Mumbai / Delhi / Bengaluru" class="w-full pl-9 pr-3 py-2.5 bg-dark-900 border border-white/15 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full mt-3 py-3.5 px-4 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm shadow-xl shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition duration-200 flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span>Confirm & Connect On WhatsApp Now</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- SUCCESS STEP (DIRECT WHATSAPP CONFIRMATION) -->
+                <div id="stepSuccess" class="quiz-step hidden text-center py-5">
+                    <div class="w-16 h-16 rounded-3xl bg-emerald-500/20 text-brand-neon flex items-center justify-center mx-auto mb-3 border border-emerald-500/40 animate-bounce">
+                        <i data-lucide="message-circle" class="w-8 h-8 fill-brand-neon/20"></i>
+                    </div>
+                    <h3 class="font-heading font-extrabold text-2xl text-white mb-1">Seat Reserved Successfully!</h3>
+                    <p class="text-xs text-slate-300 max-w-sm mx-auto mb-4">
+                        Your application is qualified and verified. Click below to initiate fast-track WhatsApp confirmation with the mentor:
+                    </p>
+
+                    <!-- Lead Summary Card -->
+                    <div class="p-3.5 rounded-2xl bg-dark-900 border border-white/10 text-left mb-5 max-w-xs mx-auto space-y-1.5 text-xs">
+                        <div class="flex justify-between"><span class="text-slate-400">Name:</span> <strong id="resName" class="text-white">-</strong></div>
+                        <div class="flex justify-between"><span class="text-slate-400">WhatsApp:</span> <strong id="resPhone" class="text-white">-</strong></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Batch:</span> <span class="text-brand-neon font-bold">15 Live Sessions</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Trade Guidance:</span> <span class="text-cyan-400 font-bold">Active Live Support</span></div>
+                    </div>
+
+                    <!-- Direct WhatsApp CTA Button -->
+                    <a id="waDirectBtn" href="#" target="_blank" class="w-full py-4 px-6 rounded-2xl bg-[#25D366] text-black font-extrabold text-sm shadow-xl shadow-emerald-600/40 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2">
+                        <i data-lucide="message-circle" class="w-5 h-5 fill-black"></i>
+                        <span>Click Here To Chat On WhatsApp & Confirm Slot</span>
+                    </a>
+                    <p class="text-[11px] text-slate-400 mt-2">Mentor team will reply instantly on WhatsApp.</p>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        const modal = document.getElementById('quizModal');
+        const modalBox = document.getElementById('modalBox');
+        let currentStep = 1;
+        const totalSteps = 6;
+        const leadData = {
+            segment: '',
+            bottleneck: '',
+            pastLoss: '',
+            capital: '',
+            commitment: '',
+            name: '',
+            phone: '',
+            city: ''
+        };
+
+        function openQuizModal() {
+            injectTradingFunnel();
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalBox.classList.remove('scale-95');
+            modalBox.classList.add('scale-100');
+        }
+
+        function closeQuizModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalBox.classList.remove('scale-100');
+            modalBox.classList.add('scale-95');
+        }
+
+        // Initialize Page
+        window.addEventListener('DOMContentLoaded', () => {
+            if (isMetaBot()) {
+                document.getElementById('btnBotMode').className = "px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-indigo-600 text-white";
+                document.getElementById('btnUserMode').className = "px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 text-slate-300 hover:bg-white/10";
+            } else {
+                renderFullTradingPage();
+                setTimeout(() => {
+                    if (!sessionStorage.getItem('leadSubmitted')) {
+                        openQuizModal();
+                    }
+                }, 700);
+            }
+        });
+
+        function updateProgressBar(step) {
+            const percentage = Math.round((step / totalSteps) * 100);
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('stepBadge').innerHTML = `<i data-lucide="shield-check" class="w-4 h-4"></i> Step ${step} of ${totalSteps}`;
+            document.getElementById('stepPercentage').textContent = `${percentage}% Completed`;
+            lucide.createIcons();
+        }
+
+        function selectAnswer(stepNumber, key, answer) {
+            leadData[key] = answer;
+            document.getElementById(`step${stepNumber}`).classList.add('hidden');
+            currentStep = stepNumber + 1;
+            document.getElementById(`step${currentStep}`).classList.remove('hidden');
+            updateProgressBar(currentStep);
+        }
+
+        function handleLeadSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('leadName').value.trim();
+            const phone = document.getElementById('leadPhone').value.trim();
+            const city = document.getElementById('leadCity').value.trim();
+
+            if (!name || phone.length !== 10) {
+                alert('Please enter a valid 10-digit WhatsApp number.');
+                return;
+            }
+
+            leadData.name = name;
+            leadData.phone = phone;
+            leadData.city = city;
+
+            // Trigger Confetti
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } });
+            }
+
+            // Save Lead to LocalStorage
+            const storedLeads = JSON.parse(localStorage.getItem('bootcamp_leads') || '[]');
+            storedLeads.push({ ...leadData, timestamp: new Date().toISOString() });
+            localStorage.setItem('bootcamp_leads', JSON.stringify(storedLeads));
+            sessionStorage.setItem('leadSubmitted', 'true');
+
+            // Show Success View
+            document.getElementById('step6').classList.add('hidden');
+            document.getElementById('stepSuccess').classList.remove('hidden');
+            document.getElementById('resName').textContent = name;
+            document.getElementById('resPhone').textContent = '+91 ' + phone;
+
+            // Generate Professional Formatted WhatsApp Message
+            const waMessage = encodeURIComponent(
+                `Hello Mentor! I have qualified and registered for the 15-Day Live Trading Psychology & Mentorship Bootcamp.\n\n` +
+                `📋 *My Trading Profile:* \n` +
+                `• *Name:* ${name}\n` +
+                `• *Market Segment:* ${leadData.segment}\n` +
+                `• *Primary Issue:* ${leadData.bottleneck}\n` +
+                `• *Past Loss Range:* ${leadData.pastLoss}\n` +
+                `• *Active Trading Capital:* ${leadData.capital}\n` +
+                `• *15 Live Sessions Commitment:* ${leadData.commitment}\n` +
+                (city ? `• *City:* ${city}\n` : '') +
+                `\n👉 Please share the 15-Day Live Schedule, Zoom Credentials & Batch Details.`
+            );
+
+            const waUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${waMessage}`;
+            document.getElementById('waDirectBtn').href = waUrl;
+
+            // Optional: Automatically open WhatsApp in new tab after 1.2 seconds
+            setTimeout(() => {
+                window.open(waUrl, '_blank');
+            }, 1200);
+
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
