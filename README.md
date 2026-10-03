@@ -1,24 +1,25 @@
-# 15-Day Live Trading Mentorship Landing Page (With Dual-Layer Bot Masking)
+# Multi-Market Live Trading Software Landing Page & Qualification Funnel
 
-## 📱 Configured Mentor WhatsApp
+## 📱 Configured WhatsApp
 - **WhatsApp Number:** `+91 8373929146` (`918373929146`)
-- Submissions will directly message this WhatsApp number with the qualified lead's details.
+- Submissions automatically qualify the trader across markets (Indian F&O, Crypto, Forex, MCX) and initiate a direct WhatsApp chat with their setup details.
 
 ---
 
-## 🛡️ How the Meta Bot Protection Works
-
-### 1. For Meta Crawler / Bot / Reviewers (White Page):
-- **URL:** `http://localhost:3000/?view=bot`
-- Meta ka bot jab bhi site scan karega, use 100% compliant **"15-Day Performance Marketing & Digital Growth Strategy Bootcamp"** dikhega.
-- Page par koi bhi trading ya financial risk keywords nahi honge (Fast Ad Approval).
-
-### 2. For Real Ad Traffic (Trading Psychology Funnel):
-- **URL:** `http://localhost:3000/?view=user`
-- Ad se aane wale real users ko full Trading Psychology content + 6-step English qualification quiz dikhega.
-- Lead submit hote hi `+91 8373929146` par WhatsApp chat pre-filled message ke sath open ho jayegi.
+## 🚀 Live Trading Software Features
+1. **Multi-Market Support:** Indian Indices/F&O, Equities, Crypto, Forex, MCX Commodities.
+2. **Real-Time Indicators & Signals:** Auto Buy/Sell signals, trailing stop loss, 3-level target alerts.
+3. **Chop & Noise Filter:** Sideways market filter to avoid false breakouts.
+4. **6-Step Qualification Funnel:**
+   - Step 1: Target Market Segment
+   - Step 2: Live Trading Challenge
+   - Step 3: Charting Platform (TradingView / Broker / MT4 / MT5)
+   - Step 4: Trading Timeframe (Scalping / Intraday / Positional)
+   - Step 5: Software Activation Readiness
+   - Step 6: Lead Details (Name, WhatsApp, City) -> Direct WhatsApp Lead Generation
 
 ---
 
 ## 🌐 Localhost Preview
 👉 **[http://localhost:3000/?view=user](http://localhost:3000/?view=user)**
+
