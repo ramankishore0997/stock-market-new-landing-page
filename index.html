@@ -107,6 +107,12 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .text-gradient-red {
+            background: linear-gradient(135deg, #FFFFFF 20%, #F87171 60%, #EF4444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .quiz-option {
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -120,16 +126,20 @@
 <body class="bg-dark-900 text-slate-100 font-sans antialiased selection:bg-brand-neon selection:text-black min-h-screen relative overflow-x-hidden">
 
     <!-- ============================================================== -->
-    <!-- 🎛️ TESTING MODE CONTROLS SWITCHER (Only shown when ?test=1)     -->
+    <!-- 🎛️ TESTING & LEADS ADMIN CONTROLS (Shown when ?test=1 or ?admin=1) -->
     <!-- ============================================================== -->
-    <div id="testSwitcher" class="hidden fixed bottom-4 left-4 z-50 bg-dark-800/95 border border-white/20 p-2 rounded-2xl shadow-2xl backdrop-blur-md items-center gap-2 text-xs">
-        <span class="text-slate-400 font-bold px-1 hidden sm:inline">Testing Mode:</span>
+    <div id="testSwitcher" class="hidden fixed bottom-4 left-4 z-50 bg-dark-800/95 border border-white/20 p-2 rounded-2xl shadow-2xl backdrop-blur-md items-center gap-2 text-xs flex-wrap">
+        <span class="text-slate-400 font-bold px-1 hidden sm:inline">Admin Mode:</span>
         <a href="?view=bot&test=1" id="btnBotMode" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 text-slate-300 hover:bg-white/10">
             🤖 Meta Bot View
         </a>
         <a href="?view=user&test=1" id="btnUserMode" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-brand-neon text-black">
             👤 Real User View
         </a>
+        <button type="button" onclick="openLeadsAdminModal()" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 hover:bg-brand-cyan/30">
+            <i data-lucide="database" class="w-3.5 h-3.5"></i>
+            <span>Saved Leads (<strong id="leadsCountBadge">0</strong>)</span>
+        </button>
     </div>
 
     <!-- MAIN DYNAMIC PAGE CONTAINER -->
@@ -170,7 +180,7 @@
 
 
     <!-- ============================================================== -->
-    <!-- 🎯 HIGH-QUALITY LEAD QUALIFICATION MODAL (ENGLISH QUESTIONS)    -->
+    <!-- 🎯 HIGH-QUALITY LEAD QUALIFICATION MODAL                        -->
     <!-- ============================================================== -->
     <div id="quizModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/90 backdrop-blur-lg opacity-0 pointer-events-none transition-all duration-300">
         
@@ -185,12 +195,12 @@
             <div class="mb-5">
                 <div class="flex items-center justify-between text-xs mb-2">
                     <span class="font-bold text-brand-neon uppercase tracking-wider flex items-center gap-1.5" id="stepBadge">
-                        <i data-lucide="shield-check" class="w-4 h-4"></i> Step 1 of 6: Market Segment
+                        <i data-lucide="shield-check" class="w-4 h-4"></i> Step 1 of 5: Market Focus
                     </span>
-                    <span class="text-slate-400 font-medium" id="stepPercentage">16% Completed</span>
+                    <span class="text-slate-400 font-medium" id="stepPercentage">20% Completed</span>
                 </div>
                 <div class="w-full bg-dark-700 h-2 rounded-full overflow-hidden">
-                    <div id="progressBar" class="bg-gradient-to-r from-brand-neon to-brand-cyan h-full w-[16%] transition-all duration-300"></div>
+                    <div id="progressBar" class="bg-gradient-to-r from-brand-neon to-brand-cyan h-full w-[20%] transition-all duration-300"></div>
                 </div>
             </div>
 
@@ -201,15 +211,82 @@
     </div>
 
     <!-- ============================================================== -->
-    <!-- 🧠 JAVASCRIPT: BOT LOGIC + ENGLISH QUALIFICATION ENGINE        -->
+    <!-- 📊 ADMIN LEADS DASHBOARD & CSV EXPORT MODAL                      -->
+    <!-- ============================================================== -->
+    <div id="leadsAdminModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-modal w-full max-w-4xl max-h-[90vh] rounded-3xl p-5 sm:p-7 flex flex-col relative shadow-2xl border border-cyan-500/40">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-brand-cyan flex items-center justify-center">
+                        <i data-lucide="database" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-white flex items-center gap-2">
+                            Saved Leads Database <span id="adminTotalLeads" class="text-xs px-2 py-0.5 rounded-full bg-brand-neon text-black font-bold">0</span>
+                        </h3>
+                        <p class="text-xs text-slate-400">All Name, Phone Number, City & Market responses captured on this browser.</p>
+                    </div>
+                </div>
+                <button onclick="closeLeadsAdminModal()" class="text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="py-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <div class="relative flex-1">
+                    <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+                    <input type="text" id="leadSearchInput" oninput="filterAdminLeads()" placeholder="Search by name, phone or city..." class="w-full pl-9 pr-3 py-2 bg-dark-900 border border-white/15 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon">
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="exportLeadsToCSV()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-xs flex items-center gap-1.5 hover:scale-105 active:scale-95 transition shadow-lg shadow-emerald-500/20">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        <span>Download Excel / CSV</span>
+                    </button>
+                    <button onclick="clearAllLeads()" class="px-3 py-2 rounded-xl bg-red-500/10 text-red-400 border border-red-500/30 text-xs font-semibold hover:bg-red-500/20 transition">
+                        Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto rounded-xl border border-white/10 bg-dark-900/60 p-2">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="bg-white/5 text-slate-400 uppercase font-semibold text-[10px] sticky top-0">
+                        <tr>
+                            <th class="p-2.5">Date & Time</th>
+                            <th class="p-2.5">Name</th>
+                            <th class="p-2.5">WhatsApp</th>
+                            <th class="p-2.5">City</th>
+                            <th class="p-2.5">Market</th>
+                            <th class="p-2.5">Goal</th>
+                            <th class="p-2.5 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTableBody" class="divide-y divide-white/5">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+                <div id="noLeadsMsg" class="py-12 text-center text-slate-500 text-xs hidden">
+                    No leads saved yet. Test by submitting the form.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 🧠 JAVASCRIPT ENGINE & LOGIC                                   -->
     <!-- ============================================================== -->
     <script>
-        // 1. CONFIGURATION: YOUR WHATSAPP NUMBER HERE
-        const WHATSAPP_NUMBER = "918373929146"; // Mentor WhatsApp Number Updated
+        // 1. CONFIGURATION: WHATSAPP GROUP LINK & PHONE NUMBER
+        const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/HSCfsuzscY99c8Yns3yUEb"; // Official VIP Group Link
+        const WHATSAPP_NUMBER = "918373929146"; // Optional Direct Chat Fallback
+        const GOOGLE_SHEET_WEBHOOK_URL = ""; // (Optional) Paste Google Apps Script Webhook URL here to auto-sync leads
 
         const urlParams = new URLSearchParams(window.location.search);
         const viewMode = urlParams.get('view');
-        if (urlParams.get('test') === '1') {
+        const isAdminParam = urlParams.get('admin') === '1' || urlParams.get('leads') === '1';
+
+        // Auto display test / admin switcher
+        if (urlParams.get('test') === '1' || isAdminParam) {
             document.getElementById('testSwitcher').classList.remove('hidden');
             document.getElementById('testSwitcher').classList.add('flex');
         }
@@ -232,20 +309,22 @@
             return botSignatures.some(sig => userAgent.includes(sig));
         };
 
-        // Render full Trading Background Page for Real Users
+        // Render Live Trading "In Front Of You" Page for Real Users
         function renderFullTradingPage() {
-            document.getElementById('pageTitle').textContent = "Live Market Trading Software & Real-Time Signal Indicator Access";
+            document.getElementById('pageTitle').textContent = "100% Live Market Trading in Front of You • No Fake Screenshots";
             
             document.getElementById('mainPageContent').innerHTML = `
                 <div class="fixed top-0 left-1/4 w-96 h-96 bg-brand-neon/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
                 <div class="fixed bottom-10 right-10 w-96 h-96 bg-brand-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <!-- Live Announcement -->
+                <!-- Live Announcement Banner -->
                 <div class="bg-gradient-to-r from-emerald-950 via-dark-800 to-emerald-950 border-b border-emerald-500/20 py-2.5 px-4 text-center text-xs md:text-sm font-medium">
-                    <div class="flex items-center justify-center gap-2">
-                        <span class="inline-flex items-center justify-center px-2 py-0.5 text-[10px] font-bold uppercase bg-brand-neon text-black rounded-full animate-pulse">ALL-IN-ONE SYSTEM</span>
-                        <span>Multi-Market Live Trading Software & Signals • <strong>Works on All Global & Indian Markets</strong></span>
-                        <button onclick="openQuizModal()" class="ml-2 underline text-brand-neon hover:text-white transition font-semibold">Get Software Access &rarr;</button>
+                    <div class="flex items-center justify-center gap-2 flex-wrap">
+                        <span class="inline-flex items-center justify-center px-2 py-0.5 text-[10px] font-bold uppercase bg-red-600 text-white rounded-full animate-pulse">
+                            🔴 LIVE MARKET PROOF
+                        </span>
+                        <span>Koi Fake Screenshot Nahi • Koi Faltu Drama Nahi • <strong>100% Live Trade In Front of You</strong></span>
+                        <button onclick="openQuizModal()" class="underline text-brand-neon hover:text-white transition font-semibold">Join VIP Group &rarr;</button>
                     </div>
                 </div>
 
@@ -254,246 +333,264 @@
                     <div class="max-w-6xl mx-auto flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-emerald to-brand-cyan flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                                <i data-lucide="cpu" class="w-6 h-6 text-black font-bold"></i>
+                                <i data-lucide="activity" class="w-6 h-6 text-black font-bold"></i>
                             </div>
                             <div>
                                 <span class="font-heading font-bold text-lg md:text-xl tracking-tight text-white flex items-center gap-1.5">
-                                    NEXUS PRO <span class="text-xs px-1.5 py-0.5 rounded bg-white/10 text-brand-neon border border-white/10">TRADING SOFTWARE</span>
+                                    LIVE TRADER <span class="text-xs px-1.5 py-0.5 rounded bg-brand-neon/20 text-brand-neon border border-brand-neon/30">PRO COMMUNITY</span>
                                 </span>
-                                <p class="text-[11px] text-slate-400 font-medium">Real-Time Live Market Intelligence & Algorithms</p>
+                                <p class="text-[11px] text-slate-400 font-medium">Live Market Screen Execution & Profit Strategy</p>
                             </div>
                         </div>
                         <button onclick="openQuizModal()" class="px-4 md:px-6 py-2.5 rounded-xl bg-brand-neon text-black font-extrabold text-xs md:text-sm shadow-lg shadow-brand-neon/25 hover:scale-105 transition flex items-center gap-2">
-                            <i data-lucide="sparkles" class="w-4 h-4"></i> Claim Software Access
+                            <i data-lucide="message-circle" class="w-4 h-4 fill-black"></i> Join VIP WhatsApp Group
                         </button>
                     </div>
                 </header>
 
                 <!-- Hero Section -->
                 <section class="relative pt-12 md:pt-16 pb-16 px-4 max-w-5xl mx-auto text-center">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-brand-neon text-xs md:text-sm font-semibold mb-6">
-                        <i data-lucide="globe-2" class="w-4 h-4 text-brand-neon"></i>
-                        <span>Universal Compatibility: Indian F&O • Crypto • Forex • Commodities • Global Equities</span>
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs md:text-sm font-semibold mb-6">
+                        <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
+                        <span>Social Media Par Fake P&L Screenshots Se Pareshan Ho? Yahan Real Reality Dekho</span>
                     </div>
 
                     <h1 class="font-heading font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight leading-tight mb-6">
-                        Trade With High-Probability Signals in <br class="hidden sm:inline">
-                        <span class="text-gradient-neon">Real-Time Across Every Market</span>
+                        Koi Fake Screenshot Nahi, Koi Faltu Drama Nahi...<br class="hidden sm:inline">
+                        <span class="text-gradient-neon">Aapke Samne LIVE Trade Karke Dikhayenge Ki Profit Kaise Banta Hai!</span>
                     </h1>
 
                     <p class="text-slate-300 text-base sm:text-lg md:text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
-                        Say goodbye to guesswork and emotional errors. Our smart live trading software detects <strong class="text-white">accurate entry points, dynamic stop-loss, profit targets, and false-breakout filters</strong> in real time on any timeframe.
+                        Kursi par baithkar purani baatein aur pre-recorded theory sunne ka zamana gaya. Live market me hamare sath screen dekho — <strong class="text-white">real entry, real stop-loss, live target execution</strong> aur dekho actual profit banne ke peeche ka logic!
                     </p>
 
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-                        <button onclick="openQuizModal()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-base md:text-lg shadow-xl shadow-emerald-500/30 hover:scale-105 transition duration-200 flex items-center justify-center gap-3">
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+                        <button onclick="openQuizModal()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-base md:text-lg shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition duration-200 flex items-center justify-center gap-3">
                             <i data-lucide="zap" class="w-5 h-5 fill-black"></i>
-                            Check Compatibility & Get Instant Software Access
+                            Reserve Free Slot & Join VIP WhatsApp Group
                         </button>
                     </div>
 
-                    <!-- 3 Feature Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-                        <div class="glass-card p-5 rounded-2xl border border-white/5 hover:border-brand-neon/30 transition">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-brand-neon flex items-center justify-center mb-3">
-                                <i data-lucide="activity" class="w-5 h-5"></i>
+                    <!-- Trust Checklist Row -->
+                    <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm text-slate-300 mb-12">
+                        <span class="flex items-center gap-1.5 text-brand-neon"><i data-lucide="check-circle" class="w-4 h-4"></i> 100% Live Screen Trading</span>
+                        <span class="flex items-center gap-1.5 text-brand-neon"><i data-lucide="check-circle" class="w-4 h-4"></i> Zero Paid Course Pitches</span>
+                        <span class="flex items-center gap-1.5 text-brand-neon"><i data-lucide="check-circle" class="w-4 h-4"></i> Instant WhatsApp Group Access</span>
+                    </div>
+
+                    <!-- 3 Core Feature Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-neon/30 transition">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-brand-neon flex items-center justify-center mb-4">
+                                <i data-lucide="monitor-play" class="w-6 h-6"></i>
                             </div>
-                            <h3 class="font-bold text-white text-base mb-1">Universal Market Engine</h3>
-                            <p class="text-xs text-slate-400">Seamlessly works on Nifty/BankNifty, Crypto, Forex, MCX Crude/Gold, and US stocks without changing setups.</p>
+                            <h3 class="font-bold text-white text-base mb-2">100% Live Screen Trading</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Market open hote hi screen share karke aapke samne trade execute hoga. Har candle ke peeche ka buyer-seller pressure aur setup dekho.
+                            </p>
                         </div>
 
-                        <div class="glass-card p-5 rounded-2xl border border-white/5 hover:border-brand-cyan/30 transition">
-                            <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-brand-cyan flex items-center justify-center mb-3">
-                                <i data-lucide="crosshair" class="w-5 h-5"></i>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-cyan/30 transition">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-brand-cyan flex items-center justify-center mb-4">
+                                <i data-lucide="shield-x" class="w-6 h-6"></i>
                             </div>
-                            <h3 class="font-bold text-white text-base mb-1">Live Entry, SL & Target Signals</h3>
-                            <p class="text-xs text-slate-400">Calculates automated trailing stop-losses, 3 risk-reward target levels, and volume-backed breakout confirmations.</p>
+                            <h3 class="font-bold text-white text-base mb-2">Zero Fake Screenshots, Zero Gimmicks</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Social media inspect-element aur fake crore profit se bhara hai. Hum sirf live terminal, transparent charts aur risk rulebook dikhate hain.
+                            </p>
                         </div>
 
-                        <div class="glass-card p-5 rounded-2xl border border-white/5 hover:border-brand-amber/30 transition">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-brand-amber flex items-center justify-center mb-3">
-                                <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-amber/30 transition">
+                            <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-brand-amber flex items-center justify-center mb-4">
+                                <i data-lucide="trending-up" class="w-6 h-6"></i>
                             </div>
-                            <h3 class="font-bold text-white text-base mb-1">False Breakout & Noise Filter</h3>
-                            <p class="text-xs text-slate-400">Built-in volatility algorithms filter out sideway chop and fake traps so you only take high-conviction trades.</p>
+                            <h3 class="font-bold text-white text-base mb-2">Learn How Profit Is Actually Made</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Kahan trade lena hai aur sabse zaroori — kahan trade bilkul nahi lena hai. Emotional control, stop-loss discipline aur consistent risk management.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Daily Live Market Routine Section -->
+                <section class="py-12 px-4 max-w-4xl mx-auto">
+                    <div class="glass-card p-6 sm:p-8 rounded-3xl border border-white/10 text-center">
+                        <span class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-neon/10 text-brand-neon border border-brand-neon/30">
+                            DAILY LIVE ROUTINE
+                        </span>
+                        <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-white mt-3 mb-2">
+                            VIP WhatsApp Group Me Aapko Kya Milega?
+                        </h2>
+                        <p class="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto mb-8">
+                            Join over 1,200+ serious traders in our private inner circle WhatsApp group:
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+                            <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
+                                <span class="text-xs font-bold text-brand-neon">09:00 AM</span>
+                                <h4 class="font-bold text-white text-sm mt-1">Pre-Market Key Levels</h4>
+                                <p class="text-[11px] text-slate-400 mt-1">Nifty, BankNifty & major market open levels and critical reversal zones.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
+                                <span class="text-xs font-bold text-brand-cyan">09:15 AM - 11:30 AM</span>
+                                <h4 class="font-bold text-white text-sm mt-1">Live Screen Execution</h4>
+                                <p class="text-[11px] text-slate-400 mt-1">Zoom / Screen share session jahan aapke samne live trade execute hota hai.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
+                                <span class="text-xs font-bold text-amber-400">Post Market</span>
+                                <h4 class="font-bold text-white text-sm mt-1">Trade Logic & Q&A</h4>
+                                <p class="text-[11px] text-slate-400 mt-1">Why trade was taken, why it was exited, and psychology review.</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-8">
+                            <button onclick="openQuizModal()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#25D366] text-black font-extrabold text-sm sm:text-base hover:scale-105 active:scale-95 transition shadow-xl shadow-emerald-600/30 inline-flex items-center justify-center gap-2">
+                                <i data-lucide="message-circle" class="w-5 h-5 fill-black"></i>
+                                Click Here To Join VIP WhatsApp Group
+                            </button>
                         </div>
                     </div>
                 </section>
 
                 <footer class="border-t border-white/10 bg-dark-900 py-8 px-4 text-xs text-slate-400 text-center">
-                    <p>&copy; 2026 Nexus Pro Trading Software. Designed for Technical Analysis & Charting Assistance.</p>
+                    <p>&copy; 2026 Live Trader Pro Community. Strictly for Educational & Observational Purposes.</p>
+                    <div class="mt-2 text-[10px] text-slate-500">
+                        <button onclick="openLeadsAdminModal()" class="underline hover:text-slate-300">Admin Leads Access</button>
+                    </div>
                 </footer>
             `;
             lucide.createIcons();
+            updateLeadsCountBadge();
         }
 
-        // 6 High-Quality Filter Questions for Trading Software in ENGLISH
+        // 5-Step Funnel: Filter Questions + Lead Data Form + Direct WhatsApp Group CTA
         function injectTradingFunnel() {
             const container = document.getElementById('dynamicFunnelContainer');
             if (container.innerHTML.trim() !== '') return;
 
             container.innerHTML = `
-                <!-- STEP 1: TRADING SEGMENT -->
+                <!-- STEP 1: MARKET SEGMENT -->
                 <div id="step1" class="quiz-step">
                     <div class="mb-4">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-brand-neon border border-emerald-500/30">Step 1 of 6</span>
-                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Which market(s) do you want the software for?</h3>
-                        <p class="text-xs text-slate-400 mt-1">Our software works across all markets. Select your primary focus:</p>
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-brand-neon border border-emerald-500/30">Step 1 of 5</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Aap kis market me LIVE trade dekhna aur seekhna chahte hain?</h3>
+                        <p class="text-xs text-slate-400 mt-1">Select your primary trading interest:</p>
                     </div>
                     <div class="space-y-2.5">
-                        <button type="button" onclick="selectAnswer(1, 'segment', 'All Markets (Indian F&O, Crypto, Forex, MCX)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">🌟</span>
-                                All Markets (Indian F&O, Crypto, Forex, MCX)
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                        <button type="button" onclick="selectAnswer(1, 'segment', 'Indian Market Only (Nifty, BankNifty, Stocks)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                        <button type="button" onclick="selectAnswer(1, 'segment', 'Nifty / BankNifty Options (Index F&O)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
                             <span class="flex items-center gap-3">
                                 <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">1</span>
-                                Indian Market (Nifty, BankNifty, Stocks & F&O)
+                                Nifty / BankNifty Options (Index F&O)
                             </span>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                         </button>
-                        <button type="button" onclick="selectAnswer(1, 'segment', 'Crypto / Forex / Global Commodities')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                        <button type="button" onclick="selectAnswer(1, 'segment', 'Stock Options & Intraday Cash Equities')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
                             <span class="flex items-center gap-3">
                                 <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">2</span>
-                                Crypto, Forex & Commodities (24x7 Markets)
+                                Stock Options & Intraday Cash Equities
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(1, 'segment', 'Crypto, Forex & MCX Commodities')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">3</span>
+                                Crypto, Forex & MCX Commodities (Crude/Gold)
                             </span>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- STEP 2: BIGGEST LIVE TRADING CHALLENGE -->
+                <!-- STEP 2: BIGGEST TRADING FRUSTRATION -->
                 <div id="step2" class="quiz-step hidden">
                     <div class="mb-4">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-500/20 text-brand-cyan border border-cyan-500/30">Step 2 of 6</span>
-                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">What is your biggest challenge in live trading?</h3>
-                        <p class="text-xs text-slate-400 mt-1">Select the key issue you want the software to solve:</p>
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30">Step 2 of 5</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Trading me aapka sabse bada frustration kya hai?</h3>
+                        <p class="text-xs text-slate-400 mt-1">Select your primary pain point:</p>
                     </div>
                     <div class="space-y-2.5">
-                        <button type="button" onclick="selectAnswer(2, 'challenge', 'Late Entries & Missing Accurate Exit Targets')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                        <button type="button" onclick="selectAnswer(2, 'frustration', 'Fake Screenshots & Recovery Groups Se Thak Chuka Hoon')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
                             <span class="flex items-center gap-3">
                                 <span class="w-7 h-7 rounded-lg bg-red-500/20 flex items-center justify-center text-xs font-bold text-red-400">A</span>
-                                Late Entries & Missing Perfect Exit Targets
+                                Fake Screenshots & Scam Recovery Channels se thak chuka hoon
                             </span>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                         </button>
-                        <button type="button" onclick="selectAnswer(2, 'challenge', 'Getting Trapped in Sideways / False Breakouts')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                        <button type="button" onclick="selectAnswer(2, 'frustration', 'Theory Pata Hai Par Live Market Me Overtrading & Loss Hota Hai')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
                             <span class="flex items-center gap-3">
                                 <span class="w-7 h-7 rounded-lg bg-amber-500/20 flex items-center justify-center text-xs font-bold text-amber-400">B</span>
-                                Trapped in Fake Breakouts & Choppy Sideways Range
+                                Theory sab pata hai, par live market me dar aur overtrading hoti hai
                             </span>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                         </button>
-                        <button type="button" onclick="selectAnswer(2, 'challenge', 'Lack of Rule-Based Discipline & Emotional Hesitation')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                        <button type="button" onclick="selectAnswer(2, 'frustration', 'Live Market Me Right Entry Aur Stop-Loss Timing Nahi Milti')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
                             <span class="flex items-center gap-3">
                                 <span class="w-7 h-7 rounded-lg bg-cyan-500/20 flex items-center justify-center text-xs font-bold text-brand-cyan">C</span>
-                                Emotional Hesitation & Inability to Track Multiple Charts
+                                Live market me accurate entry aur safe stop-loss discipline nahi milti
                             </span>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- STEP 3: CHARTING PLATFORM PREFERENCE -->
+                <!-- STEP 3: MAIN GOAL -->
                 <div id="step3" class="quiz-step hidden">
                     <div class="mb-4">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-neon/20 text-brand-neon border border-brand-neon/30">Step 3 of 6</span>
-                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Which charting platform do you currently use?</h3>
-                        <p class="text-xs text-slate-400 mt-1">For setting up indicators and tracking live charts:</p>
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-500/20 text-brand-cyan border border-cyan-500/30">Step 3 of 5</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Hamare sath judne ka aapka main goal kya hai?</h3>
+                        <p class="text-xs text-slate-400 mt-1">What do you want to achieve:</p>
                     </div>
                     <div class="space-y-2.5">
-                        <button type="button" onclick="selectAnswer(3, 'platform', 'TradingView (Free or Premium)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                        <button type="button" onclick="selectAnswer(3, 'goal', 'Live Market Me Samne Trade Karke Profit Kaise Banta Hai Seekhna')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
                             <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">📊</span>
-                                TradingView (Free or Premium account)
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">🎯</span>
+                                Samne baithkar live trade execution aur profit mindset seekhna
                             </span>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                         </button>
-                        <button type="button" onclick="selectAnswer(3, 'platform', 'Broker Terminals (Zerodha / Dhan / AngelOne / Groww)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                        <button type="button" onclick="selectAnswer(3, 'goal', 'Capital Bachana Aur Stop-Loss Trailing Master Karna')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
                             <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">💻</span>
-                                Broker Terminal (Zerodha, Dhan, AngelOne, etc.)
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                        <button type="button" onclick="selectAnswer(3, 'platform', 'MetaTrader MT4/MT5 or Crypto Exchange')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">📱</span>
-                                MetaTrader (MT4/MT5) / Crypto Platforms (Binance/Delta)
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">🛡️</span>
+                                Capital bachana aur strict loss control & risk management
                             </span>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- STEP 4: TRADING STYLE & TIMEFRAME -->
+                <!-- STEP 4: COMMITMENT -->
                 <div id="step4" class="quiz-step hidden">
                     <div class="mb-4">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-brand-neon border border-emerald-500/30">Step 4 of 6</span>
-                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">What is your primary trading timeframe?</h3>
-                        <p class="text-xs text-slate-400 mt-1">The software adapts to any custom timeframe:</p>
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-neon/20 text-brand-neon border border-brand-neon/30">Step 4 of 5</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Kya aap morning live sessions me focus ke sath baithne ke liye ready hain?</h3>
+                        <p class="text-xs text-slate-400 mt-1">Live screen trading sessions during 9:15 AM - 11:30 AM:</p>
                     </div>
                     <div class="space-y-2.5">
-                        <button type="button" onclick="selectAnswer(4, 'timeframe', '1 Min - 5 Min (Scalping / Quick Momentum)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                        <button type="button" onclick="selectAnswer(4, 'commitment', 'Yes, 100% Ready To Watch Live Screen Trades')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
                             <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-brand-neon/10 flex items-center justify-center text-xs font-bold text-brand-neon">⚡</span>
-                                1 Min - 5 Min (Scalping / Quick Momentum)
+                                <span class="w-7 h-7 rounded-lg bg-brand-neon/20 flex items-center justify-center text-xs font-bold text-brand-neon">✓</span>
+                                Yes! 100% Ready. Mujhe live trade execution dekhna hai.
                             </span>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                         </button>
-                        <button type="button" onclick="selectAnswer(4, 'timeframe', '15 Min - 1 Hour (Intraday & Trend Following)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                        <button type="button" onclick="selectAnswer(4, 'commitment', 'Daily Session Links WhatsApp Par Bhej Dena')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
                             <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-brand-neon/10 flex items-center justify-center text-xs font-bold text-brand-neon">📈</span>
-                                15 Min - 1 Hour (Intraday & Trend Following)
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                        <button type="button" onclick="selectAnswer(4, 'timeframe', 'Daily / 4-Hour (Positional & Swing Trades)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-brand-neon/10 flex items-center justify-center text-xs font-bold text-brand-neon">🎯</span>
-                                Daily / 4-Hour (Positional & Swing Trades)
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-slate-300">✓</span>
+                                Yes, please send live session links on WhatsApp daily.
                             </span>
                             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- STEP 5: ACTIVATION READINESS -->
+                <!-- STEP 5: LEAD CAPTURE FORM (NAME, PHONE, CITY) -->
                 <div id="step5" class="quiz-step hidden">
-                    <div class="mb-4">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-brand-amber border border-amber-500/30">Step 5 of 6</span>
-                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">When are you ready to activate the software?</h3>
-                        <p class="text-xs text-slate-400 mt-1">Includes live setup guide, indicator key & activation support:</p>
-                    </div>
-                    <div class="space-y-2.5">
-                        <button type="button" onclick="selectAnswer(5, 'readiness', 'Ready for Immediate Setup & Live Testing')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-brand-neon/20 flex items-center justify-center text-xs font-bold text-brand-neon">🚀</span>
-                                Ready Immediately! Send me the software access key.
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                        <button type="button" onclick="selectAnswer(5, 'readiness', 'Want Video Demo & Live Market Walkthrough First')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-slate-300">🎥</span>
-                                Send video demo & live signal walkthrough on WhatsApp.
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- STEP 6: HIGH CONVERTING LEAD CAPTURE FORM -->
-                <div id="step6" class="quiz-step hidden">
                     <div class="text-center mb-4">
                         <div class="w-12 h-12 rounded-2xl bg-brand-neon/20 text-brand-neon flex items-center justify-center mx-auto mb-2 border border-brand-neon/40">
-                            <i data-lucide="check-check" class="w-6 h-6"></i>
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
                         </div>
-                        <h3 class="font-heading font-bold text-xl text-white">Software License Available! 🎉</h3>
-                        <p class="text-xs text-slate-300 mt-1">Enter your details to receive instant access instructions & software license key on WhatsApp:</p>
+                        <h3 class="font-heading font-bold text-xl text-white">VIP Slot Qualified! 🎉</h3>
+                        <p class="text-xs text-slate-300 mt-1">Apna details enter karein taaki aapko direct WhatsApp Group join karne ka instant access mil sake:</p>
                     </div>
 
                     <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-3">
@@ -511,48 +608,52 @@
                                 <span class="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-white/15 bg-dark-900 text-brand-neon font-bold text-xs">+91</span>
                                 <input type="tel" id="leadPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="9876543210" class="w-full px-3 py-2.5 bg-dark-900 border border-white/15 rounded-r-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
                             </div>
-                            <p class="text-[10px] text-slate-400 mt-0.5">Your setup video and access key will be delivered on WhatsApp.</p>
+                            <p class="text-[10px] text-slate-400 mt-0.5">Live Zoom session updates isi number par verify honge.</p>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">City / Location (Optional)</label>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">City / Location</label>
                             <div class="relative">
                                 <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
-                                <input type="text" id="leadCity" placeholder="e.g. Mumbai / Delhi / Bengaluru" class="w-full pl-9 pr-3 py-2.5 bg-dark-900 border border-white/15 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
+                                <input type="text" id="leadCity" required placeholder="e.g. Mumbai / Delhi / Bengaluru" class="w-full pl-9 pr-3 py-2.5 bg-dark-900 border border-white/15 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
                             </div>
                         </div>
 
                         <button type="submit" id="submitBtn" class="w-full mt-3 py-3.5 px-4 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm shadow-xl shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition duration-200 flex items-center justify-center gap-2">
                             <i data-lucide="send" class="w-4 h-4"></i>
-                            <span>Get Software Key & Access On WhatsApp</span>
+                            <span>Save Details & Get WhatsApp Group Link</span>
                         </button>
                     </form>
                 </div>
 
-                <!-- SUCCESS STEP (DIRECT WHATSAPP CONFIRMATION) -->
+                <!-- SUCCESS STEP (DIRECT WHATSAPP VIP GROUP LINK) -->
                 <div id="stepSuccess" class="quiz-step hidden text-center py-5">
-                    <div class="w-16 h-16 rounded-3xl bg-emerald-500/20 text-brand-neon flex items-center justify-center mx-auto mb-3 border border-emerald-500/40 animate-bounce">
-                        <i data-lucide="message-circle" class="w-8 h-8 fill-brand-neon/20"></i>
+                    <div class="w-16 h-16 rounded-3xl bg-[#25D366]/20 text-[#25D366] flex items-center justify-center mx-auto mb-3 border border-[#25D366]/40 animate-bounce">
+                        <i data-lucide="message-circle" class="w-8 h-8 fill-[#25D366]/30"></i>
                     </div>
-                    <h3 class="font-heading font-extrabold text-2xl text-white mb-1">Access Key Ready!</h3>
+                    <h3 class="font-heading font-extrabold text-2xl text-white mb-1">VIP Pass Ready! 🎉</h3>
                     <p class="text-xs text-slate-300 max-w-sm mx-auto mb-4">
-                        Your trading software profile has been generated. Click below to connect on WhatsApp and get your live setup:
+                        Aapka data successfully register ho gaya hai. Niche button par click karke turant hamara <strong>Private Live Trading WhatsApp Group</strong> join karein:
                     </p>
 
                     <!-- Lead Summary Card -->
                     <div class="p-3.5 rounded-2xl bg-dark-900 border border-white/10 text-left mb-5 max-w-xs mx-auto space-y-1.5 text-xs">
                         <div class="flex justify-between"><span class="text-slate-400">Name:</span> <strong id="resName" class="text-white">-</strong></div>
                         <div class="flex justify-between"><span class="text-slate-400">WhatsApp:</span> <strong id="resPhone" class="text-white">-</strong></div>
-                        <div class="flex justify-between"><span class="text-slate-400">Software Mode:</span> <span class="text-brand-neon font-bold">Multi-Market Pro</span></div>
-                        <div class="flex justify-between"><span class="text-slate-400">Live Indicator:</span> <span class="text-cyan-400 font-bold">Auto Signal + SL/TP</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">City:</span> <strong id="resCity" class="text-white">-</strong></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Status:</span> <span class="text-brand-neon font-bold">100% Free VIP Slot</span></div>
                     </div>
 
-                    <!-- Direct WhatsApp CTA Button -->
-                    <a id="waDirectBtn" href="#" onclick="trackWhatsAppConversion()" target="_blank" class="w-full py-4 px-6 rounded-2xl bg-[#25D366] text-black font-extrabold text-sm shadow-xl shadow-emerald-600/40 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2">
-                        <i data-lucide="message-circle" class="w-5 h-5 fill-black"></i>
-                        <span>Click Here To Chat On WhatsApp & Activate Software</span>
+                    <!-- Direct WhatsApp VIP Group Join CTA Button -->
+                    <a id="waGroupJoinBtn" href="${WHATSAPP_GROUP_URL}" onclick="trackWhatsAppGroupConversion()" target="_blank" class="w-full py-4 px-6 rounded-2xl bg-[#25D366] text-black font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-600/40 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2">
+                        <i data-lucide="users" class="w-5 h-5 fill-black"></i>
+                        <span>Click Here To Join VIP WhatsApp Group Now</span>
                     </a>
-                    <p class="text-[11px] text-slate-400 mt-2">Support team will assist you with live chart setup immediately.</p>
+                    
+                    <p class="text-[11px] text-slate-400 mt-3 flex items-center justify-center gap-1">
+                        <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin text-brand-neon"></i>
+                        <span>Redirecting to WhatsApp Group automatically in a moment...</span>
+                    </p>
                 </div>
             `;
             lucide.createIcons();
@@ -561,26 +662,25 @@
         const modal = document.getElementById('quizModal');
         const modalBox = document.getElementById('modalBox');
         let currentStep = 1;
-        const totalSteps = 6;
+        const totalSteps = 5;
         const leadData = {
             segment: '',
-            challenge: '',
-            platform: '',
-            timeframe: '',
-            readiness: '',
+            frustration: '',
+            goal: '',
+            commitment: '',
             name: '',
             phone: '',
             city: ''
         };
 
-        function trackWhatsAppConversion() {
+        function trackWhatsAppGroupConversion() {
             if (typeof fbq === 'function') {
                 fbq('track', 'CompleteRegistration', {
-                    content_name: 'Trading Software WhatsApp Registration',
+                    content_name: 'VIP WhatsApp Group Joined',
                     status: 'completed'
                 });
                 fbq('track', 'Lead', {
-                    content_name: 'Trading Software Lead WhatsApp Click'
+                    content_name: 'Live Trading Lead Group Click'
                 });
             }
         }
@@ -610,6 +710,10 @@
                         openQuizModal();
                     }
                 }, 700);
+            }
+
+            if (isAdminParam) {
+                setTimeout(openLeadsAdminModal, 500);
             }
         });
 
@@ -646,56 +750,182 @@
 
             // Trigger Confetti
             if (typeof confetti === 'function') {
-                confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } });
+                confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
             }
 
-            // Fire Meta Pixel CompleteRegistration & Lead Events
+            // 1. Fire Meta Pixel Events
             if (typeof fbq === 'function') {
                 fbq('track', 'CompleteRegistration', {
-                    content_name: 'Trading Software Registration',
+                    content_name: 'VIP Trading Community Registration',
                     currency: 'INR',
                     status: 'completed'
                 });
                 fbq('track', 'Lead', {
-                    content_name: 'Trading Software Lead Form'
+                    content_name: 'Live Trading Lead Submitted'
                 });
             }
 
-            // Save Lead to LocalStorage
-            const storedLeads = JSON.parse(localStorage.getItem('software_leads') || '[]');
-            storedLeads.push({ ...leadData, timestamp: new Date().toISOString() });
-            localStorage.setItem('software_leads', JSON.stringify(storedLeads));
+            // 2. Reliably Save Lead to LocalStorage
+            const newLeadRecord = {
+                id: 'LEAD_' + Date.now(),
+                name: name,
+                phone: phone,
+                city: city,
+                segment: leadData.segment || 'Nifty/BankNifty Options',
+                frustration: leadData.frustration || '-',
+                goal: leadData.goal || '-',
+                commitment: leadData.commitment || '-',
+                timestamp: new Date().toISOString(),
+                createdAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+            };
+
+            const storedLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
+            storedLeads.unshift(newLeadRecord);
+            localStorage.setItem('trading_leads', JSON.stringify(storedLeads));
             sessionStorage.setItem('leadSubmitted', 'true');
+            updateLeadsCountBadge();
+
+            // 3. Optional: Post to Webhook (if user configured)
+            if (GOOGLE_SHEET_WEBHOOK_URL) {
+                try {
+                    fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newLeadRecord)
+                    });
+                } catch(err) {
+                    console.log('Webhook log:', err);
+                }
+            }
 
             // Show Success View
-            document.getElementById('step6').classList.add('hidden');
+            document.getElementById('step5').classList.add('hidden');
             document.getElementById('stepSuccess').classList.remove('hidden');
             document.getElementById('resName').textContent = name;
             document.getElementById('resPhone').textContent = '+91 ' + phone;
+            document.getElementById('resCity').textContent = city;
 
-            // Generate Professional Formatted WhatsApp Message for Software Access
-            const waMessage = encodeURIComponent(
-                `Hello! I want to get access and activation for the Live Market Trading Software.\n\n` +
-                `💻 *My Trading Setup Profile:* \n` +
-                `• *Name:* ${name}\n` +
-                `• *Target Market:* ${leadData.segment}\n` +
-                `• *Main Requirement:* ${leadData.challenge}\n` +
-                `• *Platform Used:* ${leadData.platform}\n` +
-                `• *Timeframe:* ${leadData.timeframe}\n` +
-                `• *Readiness:* ${leadData.readiness}\n` +
-                (city ? `• *City:* ${city}\n` : '') +
-                `\n👉 Please share the Software Access Key, Installation Guide & Demo Walkthrough.`
-            );
+            // Direct link to WhatsApp group
+            document.getElementById('waGroupJoinBtn').href = WHATSAPP_GROUP_URL;
 
-            const waUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${waMessage}`;
-            document.getElementById('waDirectBtn').href = waUrl;
-
-            // Optional: Automatically open WhatsApp in new tab after 1.2 seconds
+            // Automatically open WhatsApp group link after 1.8 seconds
             setTimeout(() => {
-                window.open(waUrl, '_blank');
-            }, 1200);
+                window.open(WHATSAPP_GROUP_URL, '_blank');
+            }, 1800);
 
             lucide.createIcons();
+        }
+
+        // ==============================================================
+        // 📊 LEADS MANAGEMENT & CSV EXPORTER FUNCTIONS
+        // ==============================================================
+        function updateLeadsCountBadge() {
+            const storedLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
+            const count = storedLeads.length;
+            const badge1 = document.getElementById('leadsCountBadge');
+            const badge2 = document.getElementById('adminTotalLeads');
+            if (badge1) badge1.textContent = count;
+            if (badge2) badge2.textContent = count;
+        }
+
+        function openLeadsAdminModal() {
+            const modal = document.getElementById('leadsAdminModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            renderAdminLeadsTable();
+            lucide.createIcons();
+        }
+
+        function closeLeadsAdminModal() {
+            const modal = document.getElementById('leadsAdminModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function renderAdminLeadsTable(filterText = '') {
+            const storedLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
+            const tbody = document.getElementById('leadsTableBody');
+            const noLeadsMsg = document.getElementById('noLeadsMsg');
+            tbody.innerHTML = '';
+
+            const filtered = storedLeads.filter(lead => {
+                const search = filterText.toLowerCase();
+                return (lead.name || '').toLowerCase().includes(search) ||
+                       (lead.phone || '').includes(search) ||
+                       (lead.city || '').toLowerCase().includes(search);
+            });
+
+            if (filtered.length === 0) {
+                noLeadsMsg.classList.remove('hidden');
+            } else {
+                noLeadsMsg.classList.add('hidden');
+                filtered.forEach(lead => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-white/5 transition";
+                    tr.innerHTML = `
+                        <td class="p-2.5 text-slate-400">${lead.createdAt || new Date(lead.timestamp).toLocaleDateString()}</td>
+                        <td class="p-2.5 font-bold text-white">${lead.name}</td>
+                        <td class="p-2.5">
+                            <a href="https://wa.me/91${lead.phone}" target="_blank" class="text-brand-neon hover:underline flex items-center gap-1 font-semibold">
+                                +91 ${lead.phone}
+                            </a>
+                        </td>
+                        <td class="p-2.5 text-slate-300">${lead.city || '-'}</td>
+                        <td class="p-2.5 text-slate-400 max-w-[140px] truncate" title="${lead.segment}">${lead.segment || '-'}</td>
+                        <td class="p-2.5 text-slate-400 max-w-[140px] truncate" title="${lead.goal}">${lead.goal || '-'}</td>
+                        <td class="p-2.5 text-center">
+                            <a href="https://wa.me/91${lead.phone}" target="_blank" class="px-2 py-1 rounded bg-[#25D366]/20 text-[#25D366] hover:bg-[#25D366]/30 font-bold text-[10px]">
+                                WhatsApp
+                            </a>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+            updateLeadsCountBadge();
+        }
+
+        function filterAdminLeads() {
+            const query = document.getElementById('leadSearchInput').value.trim();
+            renderAdminLeadsTable(query);
+        }
+
+        function exportLeadsToCSV() {
+            const storedLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
+            if (storedLeads.length === 0) {
+                alert('No leads available to export!');
+                return;
+            }
+
+            const headers = ['ID', 'Date & Time', 'Full Name', 'WhatsApp Number', 'City', 'Market Segment', 'Frustration', 'Goal', 'Commitment'];
+            const rows = storedLeads.map(lead => [
+                `"${lead.id || ''}"`,
+                `"${lead.createdAt || lead.timestamp || ''}"`,
+                `"${(lead.name || '').replace(/"/g, '""')}"`,
+                `"+91 ${lead.phone || ''}"`,
+                `"${(lead.city || '').replace(/"/g, '""')}"`,
+                `"${(lead.segment || '').replace(/"/g, '""')}"`,
+                `"${(lead.frustration || '').replace(/"/g, '""')}"`,
+                `"${(lead.goal || '').replace(/"/g, '""')}"`,
+                `"${(lead.commitment || '').replace(/"/g, '""')}"`
+            ]);
+
+            const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            const dateStr = new Date().toISOString().slice(0, 10);
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `trading_leads_${dateStr}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function clearAllLeads() {
+            if (confirm("Are you sure you want to clear all saved leads from this browser? Make sure you downloaded the CSV first!")) {
+                localStorage.removeItem('trading_leads');
+                renderAdminLeadsTable();
+                updateLeadsCountBadge();
+            }
         }
     </script>
 </body>
