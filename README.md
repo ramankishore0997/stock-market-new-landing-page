@@ -16,7 +16,9 @@
 ---
 
 ## 💾 Leads Storage & Export
-- **Local Storage:** All user submissions (Name, 10-digit WhatsApp number, City, Market focus, Frustration, Goal) are automatically saved in browser `localStorage`.
+- **Live Google Sheet Integration:** Automatically sends every lead to Google Sheet webhook:
+  `https://script.google.com/macros/s/AKfycbwNf9bIty6RqTR_j1GyRCiTyOn8PBumSTEceZ3UrHdQlF_WRBDBTOefh8oIdsrbnHA/exec`
+- **Local Storage Backup:** All user submissions (Name, 10-digit WhatsApp number, City, Market focus, Frustration, Goal) are also saved in browser `localStorage`.
 - **Admin Leads Modal:** Access via `?admin=1` or `?leads=1` or clicking **"Admin Leads Access"** in the footer / test bar.
 - **1-Click CSV/Excel Download:** Admin can download all leads as a formatted `.csv` file anytime.
 - **Direct WhatsApp Chat:** Click on any lead's number to open WhatsApp directly.

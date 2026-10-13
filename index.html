@@ -279,7 +279,7 @@
         // 1. CONFIGURATION: WHATSAPP GROUP LINK & PHONE NUMBER
         const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/HSCfsuzscY99c8Yns3yUEb"; // Official VIP Group Link
         const WHATSAPP_NUMBER = "918373929146"; // Optional Direct Chat Fallback
-        const GOOGLE_SHEET_WEBHOOK_URL = ""; // (Optional) Paste Google Apps Script Webhook URL here to auto-sync leads
+        const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNf9bIty6RqTR_j1GyRCiTyOn8PBumSTEceZ3UrHdQlF_WRBDBTOefh8oIdsrbnHA/exec"; // Live Google Sheet Webhook
 
         const urlParams = new URLSearchParams(window.location.search);
         const viewMode = urlParams.get('view');
@@ -758,17 +758,17 @@
             sessionStorage.setItem('leadSubmitted', 'true');
             updateLeadsCountBadge();
 
-            // 3. Optional: Post to Webhook (if user configured)
+            // 3. Post to Live Google Sheet Webhook
             if (GOOGLE_SHEET_WEBHOOK_URL) {
                 try {
                     fetch(GOOGLE_SHEET_WEBHOOK_URL, {
                         method: 'POST',
                         mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                         body: JSON.stringify(newLeadRecord)
                     });
                 } catch(err) {
-                    console.log('Webhook log:', err);
+                    console.log('Google Sheet Webhook log:', err);
                 }
             }
 
