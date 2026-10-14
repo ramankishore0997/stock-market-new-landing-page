@@ -136,6 +136,10 @@
         <a href="?view=user&test=1" id="btnUserMode" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-brand-neon text-black">
             👤 Real User View
         </a>
+        <button type="button" onclick="testSubscribePixel()" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-emerald-500/20 text-brand-neon border border-emerald-500/40 hover:bg-emerald-500/30">
+            <i data-lucide="bell-ring" class="w-3.5 h-3.5"></i>
+            <span>Test Subscribe Pixel</span>
+        </button>
         <button type="button" onclick="openLeadsAdminModal()" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 hover:bg-brand-cyan/30">
             <i data-lucide="database" class="w-3.5 h-3.5"></i>
             <span>Saved Leads (<strong id="leadsCountBadge">0</strong>)</span>
@@ -367,7 +371,7 @@
                             🔴 LIVE MARKET PROOF
                         </span>
                         <span>Koi Fake Screenshot Nahi • Koi Faltu Drama Nahi • <strong>100% Live Trade In Front of You</strong></span>
-                        <button onclick="openQuizModal()" class="underline text-brand-neon hover:text-white transition font-semibold">Join VIP Group &rarr;</button>
+                        <button onclick="openQuizModal('top_banner_subscribe')" class="underline text-brand-neon hover:text-white transition font-semibold">Subscribe / Join VIP Group &rarr;</button>
                     </div>
                 </div>
 
@@ -385,8 +389,8 @@
                                 <p class="text-[11px] text-slate-400 font-medium">Live Market Screen Execution & Profit Strategy</p>
                             </div>
                         </div>
-                        <button onclick="openQuizModal()" class="px-4 md:px-6 py-2.5 rounded-xl bg-brand-neon text-black font-extrabold text-xs md:text-sm shadow-lg shadow-brand-neon/25 hover:scale-105 transition flex items-center gap-2">
-                            <i data-lucide="message-circle" class="w-4 h-4 fill-black"></i> Join VIP WhatsApp Group
+                        <button onclick="openQuizModal('navbar_subscribe')" class="px-4 md:px-6 py-2.5 rounded-xl bg-brand-neon text-black font-extrabold text-xs md:text-sm shadow-lg shadow-brand-neon/25 hover:scale-105 transition flex items-center gap-2">
+                            <i data-lucide="bell-ring" class="w-4 h-4 fill-black"></i> Subscribe & Join VIP Group
                         </button>
                     </div>
                 </header>
@@ -408,9 +412,9 @@
                     </p>
 
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-                        <button onclick="openQuizModal()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-base md:text-lg shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition duration-200 flex items-center justify-center gap-3">
-                            <i data-lucide="zap" class="w-5 h-5 fill-black"></i>
-                            Reserve Free Slot & Join VIP WhatsApp Group
+                        <button onclick="openQuizModal('hero_subscribe')" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-base md:text-lg shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition duration-200 flex items-center justify-center gap-3">
+                            <i data-lucide="bell-ring" class="w-5 h-5 fill-black"></i>
+                            Subscribe Free & Join VIP WhatsApp Group
                         </button>
                     </div>
 
@@ -487,9 +491,9 @@
                         </div>
 
                         <div class="mt-8">
-                            <button onclick="openQuizModal()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#25D366] text-black font-extrabold text-sm sm:text-base hover:scale-105 active:scale-95 transition shadow-xl shadow-emerald-600/30 inline-flex items-center justify-center gap-2">
-                                <i data-lucide="message-circle" class="w-5 h-5 fill-black"></i>
-                                Click Here To Join VIP WhatsApp Group
+                            <button onclick="openQuizModal('routine_subscribe')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#25D366] text-black font-extrabold text-sm sm:text-base hover:scale-105 active:scale-95 transition shadow-xl shadow-emerald-600/30 inline-flex items-center justify-center gap-2">
+                                <i data-lucide="bell-ring" class="w-5 h-5 fill-black"></i>
+                                Subscribe to VIP WhatsApp Group (100% Free)
                             </button>
                         </div>
                     </div>
@@ -638,8 +642,8 @@
                         </div>
 
                         <button type="submit" id="submitBtn" class="w-full mt-3 py-3.5 px-4 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm shadow-xl shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition duration-200 flex items-center justify-center gap-2">
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                            <span>Save Details & Get WhatsApp Group Link</span>
+                            <i data-lucide="bell-ring" class="w-4 h-4"></i>
+                            <span>Save Details & Subscribe to VIP WhatsApp</span>
                         </button>
                     </form>
                 </div>
@@ -664,8 +668,8 @@
 
                     <!-- Direct WhatsApp VIP Group Join CTA Button -->
                     <a id="waGroupJoinBtn" href="${WHATSAPP_GROUP_URL}" onclick="trackWhatsAppGroupConversion()" target="_blank" class="w-full py-4 px-6 rounded-2xl bg-[#25D366] text-black font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-600/40 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2">
-                        <i data-lucide="users" class="w-5 h-5 fill-black"></i>
-                        <span>Click Here To Join VIP WhatsApp Group Now</span>
+                        <i data-lucide="bell-ring" class="w-5 h-5 fill-black"></i>
+                        <span>Click Here To Subscribe & Join VIP WhatsApp Group</span>
                     </a>
                     
                     <p class="text-[11px] text-slate-400 mt-3 flex items-center justify-center gap-1">
@@ -692,21 +696,55 @@
 
         function trackWhatsAppGroupConversion() {
             if (typeof fbq === 'function') {
-                fbq('track', 'Contact', {
-                    content_name: 'VIP WhatsApp Group Joined',
-                    channel: 'WhatsApp'
-                });
-                fbq('trackCustom', 'WhatsAppGroupJoined', {
-                    content_name: 'Live Trading Group Click'
-                });
+                try {
+                    // Standard Meta Pixel Event for Engagement Ad Campaigns (Subscribe)
+                    fbq('track', 'Subscribe', {
+                        content_name: 'VIP Live Trading WhatsApp Group',
+                        currency: 'INR',
+                        value: 50.0,
+                        fbc: currentFbc,
+                        fbp: currentFbp,
+                        status: 'subscribed'
+                    });
+                    fbq('track', 'Contact', {
+                        content_name: 'VIP WhatsApp Group Joined',
+                        channel: 'WhatsApp'
+                    });
+                    fbq('trackCustom', 'WhatsAppGroupSubscribed', {
+                        content_name: 'Live Trading Group Click'
+                    });
+                } catch(e) {
+                    console.error('Meta Pixel Subscribe error:', e);
+                }
             }
+
+            // Image beacon fallback for guaranteed delivery to Meta
+            try {
+                var subImg = new Image();
+                subImg.src = 'https://www.facebook.com/tr?id=2147810905619960&ev=Subscribe&noscript=1&cd[content_name]=VIPWhatsAppGroupSubscribed&cd[value]=50.0&cd[currency]=INR';
+            } catch(e) {}
         }
 
-        function openQuizModal() {
+        function openQuizModal(source = 'general') {
             injectTradingFunnel();
             modal.classList.remove('opacity-0', 'pointer-events-none');
             modalBox.classList.remove('scale-95');
             modalBox.classList.add('scale-100');
+
+            if (typeof fbq === 'function') {
+                try {
+                    fbq('trackCustom', 'Subscribe_Button_Clicked', {
+                        button_location: source,
+                        fbc: currentFbc,
+                        fbp: currentFbp
+                    });
+                } catch(e) {}
+            }
+        }
+
+        function testSubscribePixel() {
+            trackWhatsAppGroupConversion();
+            alert("✅ Meta 'Subscribe' event pixel fired successfully!\nCheck your Meta Pixel Helper extension to verify.");
         }
 
         function closeQuizModal() {
@@ -843,6 +881,16 @@
                         fbc: currentFbc,
                         fbp: currentFbp
                     }, { eventID: eventId });
+
+                    // Fire Subscribe event (Standard Meta event for Engagement Campaigns)
+                    fbq('track', 'Subscribe', {
+                        content_name: 'VIP Live Trading Community Subscription',
+                        currency: 'INR',
+                        value: 50.0,
+                        fbc: currentFbc,
+                        fbp: currentFbp,
+                        status: 'subscribed'
+                    }, { eventID: eventId });
                 } catch(pixelErr) {
                     console.error('Meta Pixel error:', pixelErr);
                 }
@@ -852,6 +900,8 @@
             try {
                 var fallbackImg = new Image();
                 fallbackImg.src = 'https://www.facebook.com/tr?id=2147810905619960&ev=Lead&noscript=1&cd[content_name]=LiveTradingLead&cd[value]=50.0&cd[currency]=INR';
+                var fallbackSubImg = new Image();
+                fallbackSubImg.src = 'https://www.facebook.com/tr?id=2147810905619960&ev=Subscribe&noscript=1&cd[content_name]=VIPLiveTradingSubscription&cd[value]=50.0&cd[currency]=INR';
             } catch(e) {}
 
             // 2. Reliably Save Lead to LocalStorage
@@ -899,8 +949,9 @@
             // Direct link to WhatsApp group
             document.getElementById('waGroupJoinBtn').href = WHATSAPP_GROUP_URL;
 
-            // Automatically open WhatsApp group link after 1.8 seconds
+            // Automatically open WhatsApp group link after 1.8 seconds & fire Subscribe conversion
             setTimeout(() => {
+                trackWhatsAppGroupConversion();
                 window.open(WHATSAPP_GROUP_URL, '_blank');
             }, 1800);
 
