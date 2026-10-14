@@ -285,6 +285,49 @@
         const viewMode = urlParams.get('view');
         const isAdminParam = urlParams.get('admin') === '1' || urlParams.get('leads') === '1';
 
+        // ==============================================================
+        // 🎯 FIRST-PARTY META ATTRIBUTION & BEHAVIORAL SIGNALS
+        // ==============================================================
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return '';
+        }
+
+        const fbclid = urlParams.get('fbclid');
+        if (fbclid && !getCookie('_fbc')) {
+            try {
+                document.cookie = `_fbc=fb.1.${Date.now()}.${fbclid}; path=/; max-age=7776000; SameSite=Lax`;
+            } catch(e) {}
+        }
+        const currentFbc = getCookie('_fbc') || (fbclid ? `fb.1.${Date.now()}.${fbclid}` : '');
+        const currentFbp = getCookie('_fbp') || '';
+
+        // Deep Behavioral Quality Signal: Teaches Meta to find high-intent traders
+        let traderQualityReported = false;
+        function signalEngagedTrader(reason) {
+            if (traderQualityReported) return;
+            traderQualityReported = true;
+            if (typeof fbq === 'function') {
+                fbq('trackCustom', 'EngagedTrader_HighIntent', {
+                    signal_type: reason,
+                    traffic_quality: 'high_probability_trader',
+                    fbc: currentFbc,
+                    fbp: currentFbp
+                });
+            }
+        }
+        // User spends 20s actively reading live trading proof
+        setTimeout(() => signalEngagedTrader('time_on_page_20s'), 20000);
+        // User scrolls through proof & routine sections
+        window.addEventListener('scroll', () => {
+            const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+            if (scrollPercent > 0.40 && !traderQualityReported) {
+                setTimeout(() => signalEngagedTrader('deep_scroll_40pct'), 6000);
+            }
+        }, { passive: true });
+
         // Auto display test / admin switcher
         if (urlParams.get('test') === '1' || isAdminParam) {
             document.getElementById('testSwitcher').classList.remove('hidden');
@@ -701,6 +744,34 @@
 
         function selectAnswer(stepNumber, key, answer) {
             leadData[key] = answer;
+
+            // Micro-conversion signals to train Meta's AI algorithm on real interested traders
+            if (typeof fbq === 'function') {
+                try {
+                    if (stepNumber === 1) {
+                        fbq('trackCustom', 'Trader_Segment_Selected', {
+                            segment: answer,
+                            fbc: currentFbc,
+                            fbp: currentFbp
+                        });
+                    } else if (stepNumber === 2) {
+                        fbq('trackCustom', 'Trader_Frustration_Identified', {
+                            frustration: answer,
+                            fbc: currentFbc,
+                            fbp: currentFbp
+                        });
+                    } else if (stepNumber === 3) {
+                        // Reached lead form step
+                        fbq('track', 'ViewContent', {
+                            content_name: 'Lead_Form_Reached',
+                            content_category: leadData.segment || 'Live Trading',
+                            value: 15.0,
+                            currency: 'INR'
+                        });
+                    }
+                } catch(e) {}
+            }
+
             document.getElementById(`step${stepNumber}`).classList.add('hidden');
             currentStep = stepNumber + 1;
             document.getElementById(`step${currentStep}`).classList.remove('hidden');
@@ -752,12 +823,15 @@
 
                     var eventId = 'lead_' + Date.now();
 
-                    // Fire Lead event
+                    // Fire Lead event with Value Optimization & first-party fbc/fbp
                     fbq('track', 'Lead', {
                         content_name: 'Live Trading Lead',
                         content_category: leadData.segment || 'Stock Market',
                         currency: 'INR',
-                        value: 1.0
+                        value: 50.0,
+                        fbc: currentFbc,
+                        fbp: currentFbp,
+                        status: 'qualified_active_trader'
                     }, { eventID: eventId });
 
                     // Fire CompleteRegistration event
@@ -765,7 +839,9 @@
                         content_name: 'VIP Trading Community Registration',
                         currency: 'INR',
                         status: 'completed',
-                        value: 1.0
+                        value: 50.0,
+                        fbc: currentFbc,
+                        fbp: currentFbp
                     }, { eventID: eventId });
                 } catch(pixelErr) {
                     console.error('Meta Pixel error:', pixelErr);
@@ -775,7 +851,7 @@
             // Image Beacon Fallback to guarantee transmission even if JS SDK is blocked/slow
             try {
                 var fallbackImg = new Image();
-                fallbackImg.src = 'https://www.facebook.com/tr?id=2147810905619960&ev=Lead&noscript=1&cd[content_name]=LiveTradingLead&cd[value]=1.0&cd[currency]=INR';
+                fallbackImg.src = 'https://www.facebook.com/tr?id=2147810905619960&ev=Lead&noscript=1&cd[content_name]=LiveTradingLead&cd[value]=50.0&cd[currency]=INR';
             } catch(e) {}
 
             // 2. Reliably Save Lead to LocalStorage
@@ -787,6 +863,8 @@
                 segment: leadData.segment || 'Nifty/BankNifty Options',
                 frustration: leadData.frustration || '-',
                 goal: leadData.goal || '-',
+                fbc: currentFbc,
+                fbp: currentFbp,
                 timestamp: new Date().toISOString(),
                 createdAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
             };
