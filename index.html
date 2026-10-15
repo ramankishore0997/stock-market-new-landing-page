@@ -280,8 +280,9 @@
     <!-- 🧠 JAVASCRIPT ENGINE & LOGIC                                   -->
     <!-- ============================================================== -->
     <script>
-        // 1. CONFIGURATION: WHATSAPP GROUP LINK & PHONE NUMBER
-        const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/HSCfsuzscY99c8Yns3yUEb"; // Official VIP Group Link
+        // 1. CONFIGURATION: TELEGRAM CHANNEL LINK & PHONE NUMBER
+        const TELEGRAM_CHANNEL_URL = "https://t.me/+RFCxC7-EfMk3Y2U1"; // Official VIP Telegram Channel Link
+        const WHATSAPP_GROUP_URL = TELEGRAM_CHANNEL_URL; // Compatibility alias
         const WHATSAPP_NUMBER = "918373929146"; // Optional Direct Chat Fallback
         const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNf9bIty6RqTR_j1GyRCiTyOn8PBumSTEceZ3UrHdQlF_WRBDBTOefh8oIdsrbnHA/exec"; // Live Google Sheet Webhook
 
@@ -659,14 +660,14 @@
                     </div>
 
                     <!-- Direct Access CTA Button -->
-                    <a id="waGroupJoinBtn" href="${WHATSAPP_GROUP_URL}" onclick="trackWhatsAppGroupConversion()" target="_blank" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2">
-                        <i data-lucide="monitor-play" class="w-5 h-5 fill-black"></i>
-                        <span>Click Here: Access & See Live Trades</span>
+                    <a id="waGroupJoinBtn" href="${TELEGRAM_CHANNEL_URL}" onclick="trackWhatsAppGroupConversion()" target="_blank" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-5 h-5 fill-black"></i>
+                        <span>Click Here: Access Telegram Channel & See Live Trades</span>
                     </a>
                     
                     <p class="text-[11px] text-slate-400 mt-3 flex items-center justify-center gap-1">
                         <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin text-brand-neon"></i>
-                        <span>Opening live trade access link automatically in a moment...</span>
+                        <span>Opening Telegram Channel automatically in a moment...</span>
                     </p>
                 </div>
             `;
@@ -700,7 +701,7 @@
                     });
                     fbq('track', 'Contact', {
                         content_name: 'Live Trading Access',
-                        channel: 'WhatsApp'
+                        channel: 'Telegram'
                     });
                     fbq('trackCustom', 'Reserve_Live_Trades_Clicked', {
                         content_name: 'Live Trading Access Click'
@@ -938,13 +939,13 @@
             document.getElementById('resPhone').textContent = '+91 ' + phone;
             document.getElementById('resCity').textContent = city;
 
-            // Direct link to WhatsApp group
-            document.getElementById('waGroupJoinBtn').href = WHATSAPP_GROUP_URL;
+            // Direct link to Telegram Channel
+            document.getElementById('waGroupJoinBtn').href = TELEGRAM_CHANNEL_URL;
 
-            // Automatically open WhatsApp group link after 1.8 seconds & fire Subscribe conversion
+            // Automatically open Telegram channel link after 1.8 seconds & fire Subscribe conversion
             setTimeout(() => {
                 trackWhatsAppGroupConversion();
-                window.open(WHATSAPP_GROUP_URL, '_blank');
+                window.open(TELEGRAM_CHANNEL_URL, '_blank');
             }, 1800);
 
             lucide.createIcons();
