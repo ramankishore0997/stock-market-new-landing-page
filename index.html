@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Meta Safe Tags (Visible to Meta Crawler & Bots) -->
-    <title id="pageTitle">15-Day Performance Marketing & Digital Growth Strategy Bootcamp</title>
-    <meta name="description" id="pageDesc" content="Master digital marketing funnels, performance advertising, client acquisition, and campaign scaling in 15 live interactive masterclass sessions.">
+    <!-- Meta Tags: 100% Transparent, SEBI Registered & Compliant -->
+    <title>Trade With Yogesh (SEBI Registered) • Live Market Analysis & Price Action Learning</title>
+    <meta name="description" content="Trade With Yogesh (SEBI Reg: INH000025294). Live market price action analysis, technical chart reading, risk management, and disciplined trading education.">
+    <meta name="keywords" content="Trade With Yogesh, SEBI Registered Research Analyst, Stock Market Learning, Price Action, Nifty Analysis, Risk Management">
     <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Trade With Yogesh (SEBI Registered) • Live Market Analysis">
+    <meta property="og:description" content="SEBI Reg: INH000025294. Live market technical chart reading, risk management, and disciplined trading education.">
+    <meta property="og:type" content="website">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,18 +107,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .text-gradient-purple {
-            background: linear-gradient(135deg, #FFFFFF 20%, #818CF8 60%, #C084FC 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .text-gradient-red {
-            background: linear-gradient(135deg, #FFFFFF 20%, #F87171 60%, #EF4444 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .quiz-option {
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -125,66 +119,182 @@
 </head>
 <body class="bg-dark-900 text-slate-100 font-sans antialiased selection:bg-brand-neon selection:text-black min-h-screen relative overflow-x-hidden">
 
-    <!-- ============================================================== -->
-    <!-- 🎛️ TESTING & LEADS ADMIN CONTROLS (Shown when ?test=1 or ?admin=1) -->
-    <!-- ============================================================== -->
-    <div id="testSwitcher" class="hidden fixed bottom-4 left-4 z-50 bg-dark-800/95 border border-white/20 p-2 rounded-2xl shadow-2xl backdrop-blur-md items-center gap-2 text-xs flex-wrap">
-        <span class="text-slate-400 font-bold px-1 hidden sm:inline">Admin Mode:</span>
-        <a href="?view=bot&test=1" id="btnBotMode" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 text-slate-300 hover:bg-white/10">
-            🤖 Meta Bot View
-        </a>
-        <a href="?view=user&test=1" id="btnUserMode" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-brand-neon text-black">
-            👤 Real User View
-        </a>
-        <button type="button" onclick="testSubscribePixel()" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-emerald-500/20 text-brand-neon border border-emerald-500/40 hover:bg-emerald-500/30">
-            <i data-lucide="bell-ring" class="w-3.5 h-3.5"></i>
-            <span>Test Subscribe Pixel</span>
-        </button>
-        <button type="button" onclick="openLeadsAdminModal()" class="px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 hover:bg-brand-cyan/30">
-            <i data-lucide="database" class="w-3.5 h-3.5"></i>
-            <span>Saved Leads (<strong id="leadsCountBadge">0</strong>)</span>
-        </button>
-    </div>
+    <!-- Background Glow Elements -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-brand-neon/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+    <div class="fixed bottom-10 right-10 w-96 h-96 bg-brand-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <!-- MAIN DYNAMIC PAGE CONTAINER -->
-    <div id="mainPageContent">
-        <!-- Default Safe Page Content for Bot Scrapers -->
-        <div id="whitePage" class="relative z-10 min-h-screen flex flex-col justify-between">
-            <div class="bg-gradient-to-r from-indigo-950 via-dark-800 to-indigo-950 border-b border-indigo-500/20 py-2.5 px-4 text-center text-xs md:text-sm font-medium">
-                <span class="px-2 py-0.5 text-[10px] font-bold uppercase bg-brand-indigo text-white rounded-full mr-2">NEW COHORT</span>
-                <span>15-Day Live Performance Marketing & Growth Strategy Masterclass</span>
-            </div>
-
-            <header class="border-b border-white/5 bg-dark-900/80 backdrop-blur-md px-4 lg:px-8 py-4">
-                <div class="max-w-6xl mx-auto flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center">
-                            <i data-lucide="sparkles" class="w-6 h-6 text-white font-bold"></i>
-                        </div>
-                        <span class="font-heading font-bold text-lg text-white">NEXUS GROWTH LAB</span>
-                    </div>
-                </div>
-            </header>
-
-            <main class="py-16 px-4 max-w-5xl mx-auto text-center">
-                <h1 class="font-heading font-extrabold text-3xl sm:text-5xl text-white mb-6">
-                    Scale Your Business With <br>
-                    <span class="text-gradient-purple">Performance Marketing & Funnel Architecture</span>
-                </h1>
-                <p class="text-slate-300 text-base max-w-2xl mx-auto mb-8">
-                    A comprehensive 15-day live cohort on paid customer acquisition, campaign architecture, and data analytics.
-                </p>
-            </main>
-
-            <footer class="border-t border-white/10 bg-dark-900 py-10 px-4 text-xs text-slate-400 text-center">
-                <p>&copy; 2026 Nexus Growth Lab. Educational Digital Marketing Training. All rights reserved.</p>
-            </footer>
+    <!-- Live Announcement Banner -->
+    <div class="bg-gradient-to-r from-emerald-950 via-dark-800 to-emerald-950 border-b border-emerald-500/20 py-2.5 px-4 text-center text-xs md:text-sm font-medium relative z-20">
+        <div class="flex items-center justify-center gap-2 flex-wrap">
+            <span class="inline-flex items-center justify-center px-2 py-0.5 text-[10px] font-bold uppercase bg-brand-emerald text-black rounded-full">
+                LIVE MARKET ANALYSIS
+            </span>
+            <span>Transparent Price Action • Live Key Levels • <strong>Educational Screen Sessions</strong></span>
+            <button onclick="openQuizModal('top_banner_reserve')" class="underline text-brand-neon hover:text-white transition font-semibold ml-1">Reserve & See Live Analysis &rarr;</button>
         </div>
     </div>
 
+    <!-- Navbar -->
+    <header class="sticky top-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-white/5 px-4 lg:px-8 py-4">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div>
+                <span class="font-heading font-bold text-base sm:text-lg md:text-xl tracking-tight text-white block">
+                    Trade With Yogesh (SEBI Registered)
+                </span>
+                <p class="text-[11px] text-slate-400 font-medium">SEBI Reg: INH000025294 • Live Market Technical Analysis</p>
+            </div>
+            <button onclick="openQuizModal('navbar_reserve')" class="px-4 md:px-6 py-2.5 rounded-xl bg-brand-neon text-black font-extrabold text-xs md:text-sm shadow-lg shadow-brand-neon/25 hover:scale-105 active:scale-95 transition flex items-center gap-2">
+                <i data-lucide="monitor-play" class="w-4 h-4 fill-black"></i>
+                <span>Reserve & See Live Analysis</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-12 md:pt-16 pb-16 px-4 max-w-5xl mx-auto text-center">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-brand-neon text-xs md:text-sm font-semibold mb-6">
+            <i data-lucide="shield-check" class="w-4 h-4 text-brand-neon"></i>
+            <span>SEBI Registered Research Analyst • Reg No: INH000025294</span>
+        </div>
+
+        <h1 class="font-heading font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight leading-tight mb-6">
+            Koi Fake Screenshot Nahi, Koi Faltu Gimmicks Nahi...<br class="hidden sm:inline">
+            <span class="text-gradient-neon">Live Market Me Screen Par Dekho — Price Action, Key Levels Aur Trade Logic!</span>
+        </h1>
+
+        <p class="text-slate-300 text-base sm:text-lg md:text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
+            Kursi par baithkar purani baatein aur pre-recorded theory sunne ka zamana gaya. Live market me hamare sath screen par dekho — <strong class="text-white">real market structure, strict stop-loss discipline, live risk management</strong> aur setup ke peeche ka pure technical logic.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+            <button onclick="openQuizModal('hero_reserve')" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-base md:text-lg shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition duration-200 flex items-center justify-center gap-3">
+                <i data-lucide="monitor-play" class="w-5 h-5 fill-black"></i>
+                <span>Reserve Free Spot & Join Live Analysis</span>
+            </button>
+        </div>
+
+        <!-- Trust Checklist Row -->
+        <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm text-slate-300 mb-12">
+            <span class="flex items-center gap-1.5 text-brand-neon"><i data-lucide="check-circle" class="w-4 h-4"></i> 100% Live Screen Analysis</span>
+            <span class="flex items-center gap-1.5 text-brand-neon"><i data-lucide="check-circle" class="w-4 h-4"></i> SEBI Reg: INH000025294</span>
+            <span class="flex items-center gap-1.5 text-brand-neon"><i data-lucide="check-circle" class="w-4 h-4"></i> Instant Educational Access</span>
+        </div>
+
+        <!-- 3 Core Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+            <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-neon/30 transition">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-brand-neon flex items-center justify-center mb-4">
+                    <i data-lucide="monitor-play" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-white text-base mb-2">100% Live Screen Analysis</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Market open hote hi screen share karke chart structure analyze hota hai. Har candle ke peeche ka buyer-seller pressure, key support-resistance aur breakout zones samjho.
+                </p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-cyan/30 transition">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-brand-cyan flex items-center justify-center mb-4">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-white text-base mb-2">Zero Gimmicks, Pure Transparency</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Social media inspect-element aur fake screenshots se bhara hai. Hum sirf live terminal, transparent charts, technical indicators aur strict risk rulebook sikhate hain.
+                </p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-amber/30 transition">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-brand-amber flex items-center justify-center mb-4">
+                    <i data-lucide="trending-up" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-white text-base mb-2">Disciplined Risk Management</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Kahan trade plan karna hai aur sabse zaroori — kahan bilkul trade nahi lena hai. Emotional control, stop-loss discipline aur consistent capital preservation master karein.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Live Market Routine Section -->
+    <section class="py-12 px-4 max-w-4xl mx-auto">
+        <div class="glass-card p-6 sm:p-8 rounded-3xl border border-white/10 text-center">
+            <span class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-neon/10 text-brand-neon border border-brand-neon/30">
+                DAILY LIVE ROUTINE
+            </span>
+            <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-white mt-3 mb-2">
+                Live Market Sessions Me Aapko Kya Seekhne Ko Milega?
+            </h2>
+            <p class="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto mb-8">
+                Join serious traders who follow structured daily market routines:
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+                <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
+                    <span class="text-xs font-bold text-brand-neon">09:00 AM</span>
+                    <h4 class="font-bold text-white text-sm mt-1">Pre-Market Key Levels</h4>
+                    <p class="text-[11px] text-slate-400 mt-1">Nifty, BankNifty & major index opening levels, trend direction and critical reversal zones.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
+                    <span class="text-xs font-bold text-brand-cyan">09:15 AM - 11:30 AM</span>
+                    <h4 class="font-bold text-white text-sm mt-1">Live Screen Analysis</h4>
+                    <p class="text-[11px] text-slate-400 mt-1">Interactive session jahan screen par live price action movement aur execution logic explain hota hai.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
+                    <span class="text-xs font-bold text-amber-400">Post Market</span>
+                    <h4 class="font-bold text-white text-sm mt-1">Setup Logic & Review</h4>
+                    <p class="text-[11px] text-slate-400 mt-1">Detailed review of why setups were identified, how risk was managed, and psychology lessons.</p>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <button onclick="openQuizModal('routine_reserve')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm sm:text-base hover:scale-105 active:scale-95 transition shadow-xl shadow-emerald-500/30 inline-flex items-center justify-center gap-2">
+                    <i data-lucide="monitor-play" class="w-5 h-5 fill-black"></i>
+                    <span>Reserve Spot & Join Live Analysis (100% Free)</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPREHENSIVE COMPLIANT FOOTER -->
+    <footer class="border-t border-white/10 bg-dark-900/95 py-12 px-4 text-xs text-slate-400 mt-16">
+        <div class="max-w-5xl mx-auto space-y-6 text-center sm:text-left">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/10">
+                <div>
+                    <h4 class="font-heading font-bold text-white text-base">Trade With Yogesh</h4>
+                    <p class="text-xs text-brand-neon font-medium mt-0.5">SEBI Registered Research Analyst • Registration No: INH000025294</p>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-slate-300">
+                    <button type="button" onclick="openLegalModal('privacy')" class="hover:text-brand-neon transition underline">Privacy Policy</button>
+                    <button type="button" onclick="openLegalModal('terms')" class="hover:text-brand-neon transition underline">Terms & Conditions</button>
+                    <button type="button" onclick="openLegalModal('disclaimer')" class="hover:text-brand-neon transition underline">Risk Disclosure</button>
+                    <button type="button" onclick="openLegalModal('contact')" class="hover:text-brand-neon transition underline">Contact & Grievance</button>
+                </div>
+            </div>
+
+            <!-- Mandatory SEBI & Market Risk Disclaimers -->
+            <div class="space-y-3 text-[11px] leading-relaxed text-slate-400 bg-white/[0.02] p-4 rounded-xl border border-white/5">
+                <p>
+                    <strong class="text-white">Regulatory Disclaimer:</strong> Investment in securities market are subject to market risks. Read all the related documents carefully before investing. Registration granted by SEBI and certification from NISM in no way guarantee performance of the intermediary or provide any assurance of returns to investors.
+                </p>
+                <p>
+                    <strong class="text-white">Derivative & F&O Warning:</strong> 9 out of 10 individual traders in equity Futures and Options Segment incur net losses. On average, loss makers registered net trading loss close to ₹50,000. Over and above the net trading losses, those who incurred losses also had to pay additional costs as transaction charges.
+                </p>
+                <p>
+                    <strong class="text-white">Educational Purpose:</strong> All sessions, charts, analysis, and materials provided by Trade With Yogesh are strictly for educational and observational purposes. We do not provide any guaranteed returns, fixed income promises, or unauthorized portfolio management schemes.
+                </p>
+                <p>
+                    <strong class="text-white">Platform Disclosure:</strong> This website is not a part of Meta Platforms, Inc. or Facebook. Additionally, this website is NOT endorsed or certified by Facebook or Meta in any way. FACEBOOK is a registered trademark of Meta Platforms, Inc.
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 pt-2 gap-2">
+                <p>&copy; 2026 Trade With Yogesh. All rights reserved.</p>
+                <p>Research Analyst Reg: INH000025294</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- ============================================================== -->
-    <!-- 🎯 HIGH-QUALITY LEAD QUALIFICATION MODAL                        -->
+    <!-- 🎯 LEAD QUALIFICATION MODAL (OPENS ONLY ON USER CLICK)          -->
     <!-- ============================================================== -->
     <div id="quizModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/90 backdrop-blur-lg opacity-0 pointer-events-none transition-all duration-300">
         
@@ -208,14 +318,193 @@
                 </div>
             </div>
 
-            <!-- Dynamic Content Container -->
-            <div id="dynamicFunnelContainer"></div>
+            <!-- Dynamic Steps Container -->
+            <div id="dynamicFunnelContainer">
+                <!-- STEP 1: MARKET SEGMENT -->
+                <div id="step1" class="quiz-step">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-brand-neon border border-emerald-500/30">Step 1 of 4</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Aap kis market me LIVE analysis dekhna aur seekhna chahte hain?</h3>
+                        <p class="text-xs text-slate-400 mt-1">Select your primary trading interest:</p>
+                    </div>
+                    <div class="space-y-2.5">
+                        <button type="button" onclick="selectAnswer(1, 'segment', 'Nifty / BankNifty Options (Index F&O)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">1</span>
+                                Nifty / BankNifty Options (Index F&O)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(1, 'segment', 'Stock Options & Intraday Cash Equities')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">2</span>
+                                Stock Options & Intraday Cash Equities
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(1, 'segment', 'Crypto, Forex & MCX Commodities')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">3</span>
+                                Crypto, Forex & MCX Commodities (Crude/Gold)
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: BIGGEST TRADING CHALLENGE -->
+                <div id="step2" class="quiz-step hidden">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-500/20 text-brand-cyan border border-cyan-500/30">Step 2 of 4</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Trading me aapka sabse bada challenge kya hai?</h3>
+                        <p class="text-xs text-slate-400 mt-1">Select your primary focus area:</p>
+                    </div>
+                    <div class="space-y-2.5">
+                        <button type="button" onclick="selectAnswer(2, 'frustration', 'Fake Screenshots & Unverified Channels Se Door Rehna')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-cyan-500/20 flex items-center justify-center text-xs font-bold text-brand-cyan">A</span>
+                                Unverified social media claims se bachkar real logic seekhna
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(2, 'frustration', 'Live Market Me Overtrading & Fear Control Karna')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-amber-500/20 flex items-center justify-center text-xs font-bold text-amber-400">B</span>
+                                Live market me emotional discipline aur overtrading control karna
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(2, 'frustration', 'Accurate Entry Aur Safe Stop-Loss Discipline Maintain Karna')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-xs font-bold text-brand-neon">C</span>
+                                Live market me accurate entry timing aur strict stop-loss discipline
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: MAIN GOAL -->
+                <div id="step3" class="quiz-step hidden">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-brand-neon border border-emerald-500/30">Step 3 of 4</span>
+                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Hamare sath judne ka aapka main goal kya hai?</h3>
+                        <p class="text-xs text-slate-400 mt-1">What do you want to achieve:</p>
+                    </div>
+                    <div class="space-y-2.5">
+                        <button type="button" onclick="selectAnswer(3, 'goal', 'Live Market Price Action & Key Levels Execution Seekhna')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">🎯</span>
+                                Live market price action, chart levels aur trade logic seekhna
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="selectAnswer(3, 'goal', 'Capital Protection & Strict Risk Management Master Karna')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
+                            <span class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">🛡️</span>
+                                Capital protection aur strict loss control & risk management
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: LEAD CAPTURE FORM -->
+                <div id="step4" class="quiz-step hidden">
+                    <div class="text-center mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-neon/20 text-brand-neon flex items-center justify-center mx-auto mb-2 border border-brand-neon/40">
+                            <i data-lucide="check-circle" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-white">Live Session Slot Reserved! 🎉</h3>
+                        <p class="text-xs text-slate-300 mt-1">Apna details enter karein taaki aapka session slot confirm ho sake aur aap live analysis dekh sakein:</p>
+                    </div>
+
+                    <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
+                            <div class="relative">
+                                <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+                                <input type="text" id="leadName" required placeholder="e.g. Rahul Sharma" class="w-full pl-9 pr-3 py-2.5 bg-dark-900 border border-white/15 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Phone Number</label>
+                            <div class="relative flex">
+                                <span class="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-white/15 bg-dark-900 text-brand-neon font-bold text-xs">+91</span>
+                                <input type="tel" id="leadPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="9876543210" class="w-full px-3 py-2.5 bg-dark-900 border border-white/15 rounded-r-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-0.5">Live session updates aur access details isi number par verify honge.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">City / Location</label>
+                            <div class="relative">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+                                <input type="text" id="leadCity" required placeholder="e.g. Mumbai / Delhi / Bengaluru" class="w-full pl-9 pr-3 py-2.5 bg-dark-900 border border-white/15 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full mt-3 py-3.5 px-4 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm shadow-xl shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition duration-200 flex items-center justify-center gap-2">
+                            <i data-lucide="monitor-play" class="w-4 h-4"></i>
+                            <span>Confirm Slot & Join Live Analysis</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- SUCCESS STEP (TELEGRAM CHANNEL ACCESS) -->
+                <div id="stepSuccess" class="quiz-step hidden text-center py-5">
+                    <div class="w-16 h-16 rounded-3xl bg-brand-neon/20 text-brand-neon flex items-center justify-center mx-auto mb-3 border border-brand-neon/40 animate-bounce">
+                        <i data-lucide="monitor-play" class="w-8 h-8 fill-brand-neon/30"></i>
+                    </div>
+                    <h3 class="font-heading font-extrabold text-2xl text-white mb-1">Slot Confirmed! 🎉</h3>
+                    <p class="text-xs text-slate-300 max-w-sm mx-auto mb-4">
+                        Aapka live analysis session slot reserve ho gaya hai. Niche button par click karke turant <strong>Live Session Telegram Channel</strong> join karein:
+                    </p>
+
+                    <!-- Lead Summary Card -->
+                    <div class="p-3.5 rounded-2xl bg-dark-900 border border-white/10 text-left mb-5 max-w-xs mx-auto space-y-1.5 text-xs">
+                        <div class="flex justify-between"><span class="text-slate-400">Name:</span> <strong id="resName" class="text-white">-</strong></div>
+                        <div class="flex justify-between"><span class="text-slate-400">WhatsApp:</span> <strong id="resPhone" class="text-white">-</strong></div>
+                        <div class="flex justify-between"><span class="text-slate-400">City:</span> <strong id="resCity" class="text-white">-</strong></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Status:</span> <span class="text-brand-neon font-bold">100% Free VIP Slot</span></div>
+                    </div>
+
+                    <!-- Direct Access CTA Button -->
+                    <a id="waGroupJoinBtn" href="https://telegram.me/+RFCxC7-EfMk3Y2U1" onclick="trackWhatsAppGroupConversion()" target="_blank" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-5 h-5 fill-black"></i>
+                        <span>Click Here: Access Telegram Channel & Join Live Analysis</span>
+                    </a>
+                    
+                    <p class="text-[11px] text-slate-400 mt-3 flex items-center justify-center gap-1">
+                        <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin text-brand-neon"></i>
+                        <span>Opening Telegram Channel automatically in a moment...</span>
+                    </p>
+                </div>
+            </div>
 
         </div>
     </div>
 
     <!-- ============================================================== -->
-    <!-- 📊 ADMIN LEADS DASHBOARD & CSV EXPORT MODAL                      -->
+    <!-- 📄 LEGAL & POLICY MODAL (PRIVACY, TERMS, DISCLAIMER, CONTACT)    -->
+    <!-- ============================================================== -->
+    <div id="legalModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-modal w-full max-w-2xl max-h-[85vh] rounded-3xl p-6 sm:p-8 flex flex-col relative shadow-2xl border border-white/20">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                <h3 id="legalModalTitle" class="font-heading font-bold text-lg text-white">Privacy Policy</h3>
+                <button onclick="closeLegalModal()" class="text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="legalModalContent" class="py-5 overflow-y-auto text-xs leading-relaxed text-slate-300 space-y-4">
+                <!-- Injected dynamically via openLegalModal() -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 📊 ADMIN LEADS DASHBOARD (Accessible via ?admin=1 or ?leads=1)   -->
     <!-- ============================================================== -->
     <div id="leadsAdminModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300">
         <div class="glass-modal w-full max-w-4xl max-h-[90vh] rounded-3xl p-5 sm:p-7 flex flex-col relative shadow-2xl border border-cyan-500/40">
@@ -280,19 +569,15 @@
     <!-- 🧠 JAVASCRIPT ENGINE & LOGIC                                   -->
     <!-- ============================================================== -->
     <script>
-        // 1. CONFIGURATION: TELEGRAM CHANNEL LINK & PHONE NUMBER
-        const TELEGRAM_CHANNEL_URL = "https://telegram.me/+RFCxC7-EfMk3Y2U1"; // Official VIP Telegram Channel Link
-        const WHATSAPP_GROUP_URL = TELEGRAM_CHANNEL_URL; // Compatibility alias
-        const WHATSAPP_NUMBER = "918373929146"; // Optional Direct Chat Fallback
-        const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNf9bIty6RqTR_j1GyRCiTyOn8PBumSTEceZ3UrHdQlF_WRBDBTOefh8oIdsrbnHA/exec"; // Live Google Sheet Webhook
+        // CONFIGURATION: TELEGRAM CHANNEL LINK & WEBHOOK
+        const TELEGRAM_CHANNEL_URL = "https://telegram.me/+RFCxC7-EfMk3Y2U1";
+        const WHATSAPP_GROUP_URL = TELEGRAM_CHANNEL_URL;
+        const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNf9bIty6RqTR_j1GyRCiTyOn8PBumSTEceZ3UrHdQlF_WRBDBTOefh8oIdsrbnHA/exec";
 
         const urlParams = new URLSearchParams(window.location.search);
-        const viewMode = urlParams.get('view');
         const isAdminParam = urlParams.get('admin') === '1' || urlParams.get('leads') === '1';
 
-        // ==============================================================
-        // 🎯 FIRST-PARTY META ATTRIBUTION & BEHAVIORAL SIGNALS
-        // ==============================================================
+        // Attribution tracking (fbc / fbp)
         function getCookie(name) {
             const value = `; ${document.cookie}`;
             const parts = value.split(`; ${name}=`);
@@ -309,371 +594,7 @@
         const currentFbc = getCookie('_fbc') || (fbclid ? `fb.1.${Date.now()}.${fbclid}` : '');
         const currentFbp = getCookie('_fbp') || '';
 
-        // Deep Behavioral Quality Signal: Teaches Meta to find high-intent traders
-        let traderQualityReported = false;
-        function signalEngagedTrader(reason) {
-            if (traderQualityReported) return;
-            traderQualityReported = true;
-            if (typeof fbq === 'function') {
-                fbq('trackCustom', 'EngagedTrader_HighIntent', {
-                    signal_type: reason,
-                    traffic_quality: 'high_probability_trader',
-                    fbc: currentFbc,
-                    fbp: currentFbp
-                });
-            }
-        }
-        // User spends 20s actively reading live trading proof
-        setTimeout(() => signalEngagedTrader('time_on_page_20s'), 20000);
-        // User scrolls through proof & routine sections
-        window.addEventListener('scroll', () => {
-            const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-            if (scrollPercent > 0.40 && !traderQualityReported) {
-                setTimeout(() => signalEngagedTrader('deep_scroll_40pct'), 6000);
-            }
-        }, { passive: true });
-
-        // Auto display test / admin switcher
-        if (urlParams.get('test') === '1' || isAdminParam) {
-            document.getElementById('testSwitcher').classList.remove('hidden');
-            document.getElementById('testSwitcher').classList.add('flex');
-        }
-
-        const isMetaBot = () => {
-            if (viewMode === 'bot') return true;
-            if (viewMode === 'user') return false;
-
-            const userAgent = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
-            const botSignatures = [
-                'facebookexternalhit',
-                'facebot',
-                'meta-externalagent',
-                'meta-externalfetcher',
-                'googlebot',
-                'bingbot',
-                'lighthouse',
-                'headlesschrome'
-            ];
-            return botSignatures.some(sig => userAgent.includes(sig));
-        };
-
-        // Render Live Trading "In Front Of You" Page for Real Users
-        function renderFullTradingPage() {
-            document.getElementById('pageTitle').textContent = "Trade With Yogesh (SEBI Registered) • 100% Live Market Trading in Front of You";
-            
-            document.getElementById('mainPageContent').innerHTML = `
-                <div class="fixed top-0 left-1/4 w-96 h-96 bg-brand-neon/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
-                <div class="fixed bottom-10 right-10 w-96 h-96 bg-brand-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
-
-                <!-- Live Announcement Banner -->
-                <div class="bg-gradient-to-r from-emerald-950 via-dark-800 to-emerald-950 border-b border-emerald-500/20 py-2.5 px-4 text-center text-xs md:text-sm font-medium">
-                    <div class="flex items-center justify-center gap-2 flex-wrap">
-                        <span class="inline-flex items-center justify-center px-2 py-0.5 text-[10px] font-bold uppercase bg-red-600 text-white rounded-full animate-pulse">
-                            🔴 LIVE MARKET PROOF
-                        </span>
-                        <span>Koi Fake Screenshot Nahi • Koi Faltu Drama Nahi • <strong>100% Live Trade In Front of You</strong></span>
-                        <button onclick="openQuizModal('top_banner_reserve')" class="underline text-brand-neon hover:text-white transition font-semibold">Reserve & See Live Trades &rarr;</button>
-                    </div>
-                </div>
-
-                <!-- Navbar -->
-                <header class="sticky top-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-white/5 px-4 lg:px-8 py-4">
-                    <div class="max-w-6xl mx-auto flex items-center justify-between">
-                        <div>
-                            <span class="font-heading font-bold text-base sm:text-lg md:text-xl tracking-tight text-white block">
-                                Trade With Yogesh (SEBI Registered)
-                            </span>
-                            <p class="text-[11px] text-slate-400 font-medium">SEBI Reg: INH000025294 • Live Market Screen Execution</p>
-                        </div>
-                        <button onclick="openQuizModal('navbar_reserve')" class="px-4 md:px-6 py-2.5 rounded-xl bg-brand-neon text-black font-extrabold text-xs md:text-sm shadow-lg shadow-brand-neon/25 hover:scale-105 transition flex items-center gap-2">
-                            <i data-lucide="monitor-play" class="w-4 h-4 fill-black"></i> Reserve & See Live Trades
-                        </button>
-                    </div>
-                </header>
-
-                <!-- Hero Section -->
-                <section class="relative pt-12 md:pt-16 pb-16 px-4 max-w-5xl mx-auto text-center">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs md:text-sm font-semibold mb-6">
-                        <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
-                        <span>Social Media Par Fake P&L Screenshots Se Pareshan Ho? Yahan Real Reality Dekho</span>
-                    </div>
-
-                    <h1 class="font-heading font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight leading-tight mb-6">
-                        Koi Fake Screenshot Nahi, Koi Faltu Drama Nahi...<br class="hidden sm:inline">
-                        <span class="text-gradient-neon">Aapke Samne LIVE Trade Karke Dikhayenge Ki Profit Kaise Banta Hai!</span>
-                    </h1>
-
-                    <p class="text-slate-300 text-base sm:text-lg md:text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
-                        Kursi par baithkar purani baatein aur pre-recorded theory sunne ka zamana gaya. Live market me hamare sath screen dekho — <strong class="text-white">real entry, real stop-loss, live target execution</strong> aur dekho actual profit banne ke peeche ka logic!
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-                        <button onclick="openQuizModal('hero_reserve')" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-base md:text-lg shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition duration-200 flex items-center justify-center gap-3">
-                            <i data-lucide="monitor-play" class="w-5 h-5 fill-black"></i>
-                            Reserve Free Spot & See Live Trades
-                        </button>
-                    </div>
-
-                    <!-- Trust Checklist Row -->
-                    <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm text-slate-300 mb-12">
-                        <span class="flex items-center gap-1.5 text-brand-neon"><i data-lucide="check-circle" class="w-4 h-4"></i> 100% Live Screen Trading</span>
-                        <span class="flex items-center gap-1.5 text-brand-neon"><i data-lucide="check-circle" class="w-4 h-4"></i> SEBI Reg: INH000025294</span>
-                        <span class="flex items-center gap-1.5 text-brand-neon"><i data-lucide="check-circle" class="w-4 h-4"></i> Instant Live Screen Access</span>
-                    </div>
-
-                    <!-- 3 Core Feature Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
-                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-neon/30 transition">
-                            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-brand-neon flex items-center justify-center mb-4">
-                                <i data-lucide="monitor-play" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-bold text-white text-base mb-2">100% Live Screen Trading</h3>
-                            <p class="text-xs text-slate-400 leading-relaxed">
-                                Market open hote hi screen share karke aapke samne trade execute hoga. Har candle ke peeche ka buyer-seller pressure aur setup dekho.
-                            </p>
-                        </div>
-
-                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-cyan/30 transition">
-                            <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-brand-cyan flex items-center justify-center mb-4">
-                                <i data-lucide="shield-x" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-bold text-white text-base mb-2">Zero Fake Screenshots, Zero Gimmicks</h3>
-                            <p class="text-xs text-slate-400 leading-relaxed">
-                                Social media inspect-element aur fake crore profit se bhara hai. Hum sirf live terminal, transparent charts aur risk rulebook dikhate hain.
-                            </p>
-                        </div>
-
-                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-amber/30 transition">
-                            <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-brand-amber flex items-center justify-center mb-4">
-                                <i data-lucide="trending-up" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-bold text-white text-base mb-2">Learn How Profit Is Actually Made</h3>
-                            <p class="text-xs text-slate-400 leading-relaxed">
-                                Kahan trade lena hai aur sabse zaroori — kahan trade bilkul nahi lena hai. Emotional control, stop-loss discipline aur consistent risk management.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Daily Live Market Routine Section -->
-                <section class="py-12 px-4 max-w-4xl mx-auto">
-                    <div class="glass-card p-6 sm:p-8 rounded-3xl border border-white/10 text-center">
-                        <span class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-neon/10 text-brand-neon border border-brand-neon/30">
-                            DAILY LIVE ROUTINE
-                        </span>
-                        <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-white mt-3 mb-2">
-                            Live Market Sessions Me Aapko Kya Dekhne Ko Milega?
-                        </h2>
-                        <p class="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto mb-8">
-                            Join 1,200+ serious traders who watch live screen execution daily:
-                        </p>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
-                            <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-                                <span class="text-xs font-bold text-brand-neon">09:00 AM</span>
-                                <h4 class="font-bold text-white text-sm mt-1">Pre-Market Key Levels</h4>
-                                <p class="text-[11px] text-slate-400 mt-1">Nifty, BankNifty & major market open levels and critical reversal zones.</p>
-                            </div>
-                            <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-                                <span class="text-xs font-bold text-brand-cyan">09:15 AM - 11:30 AM</span>
-                                <h4 class="font-bold text-white text-sm mt-1">Live Screen Execution</h4>
-                                <p class="text-[11px] text-slate-400 mt-1">Zoom / Screen share session jahan aapke samne live trade execute hota hai.</p>
-                            </div>
-                            <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-                                <span class="text-xs font-bold text-amber-400">Post Market</span>
-                                <h4 class="font-bold text-white text-sm mt-1">Trade Logic & Q&A</h4>
-                                <p class="text-[11px] text-slate-400 mt-1">Why trade was taken, why it was exited, and psychology review.</p>
-                            </div>
-                        </div>
-
-                        <div class="mt-8">
-                            <button onclick="openQuizModal('routine_reserve')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm sm:text-base hover:scale-105 active:scale-95 transition shadow-xl shadow-emerald-500/30 inline-flex items-center justify-center gap-2">
-                                <i data-lucide="monitor-play" class="w-5 h-5 fill-black"></i>
-                                Reserve Spot & See Live Trades (100% Free)
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <footer class="border-t border-white/10 bg-dark-900 py-8 px-4 text-xs text-slate-400 text-center">
-                    <p>&copy; 2026 Trade With Yogesh • SEBI Registration No: INH000025294. Strictly for Educational & Observational Purposes.</p>
-                </footer>
-            `;
-            lucide.createIcons();
-            updateLeadsCountBadge();
-        }
-
-        // 5-Step Funnel: Filter Questions + Lead Data Form + Direct WhatsApp Group CTA
-        function injectTradingFunnel() {
-            const container = document.getElementById('dynamicFunnelContainer');
-            if (container.innerHTML.trim() !== '') return;
-
-            container.innerHTML = `
-                <!-- STEP 1: MARKET SEGMENT -->
-                <div id="step1" class="quiz-step">
-                    <div class="mb-4">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-brand-neon border border-emerald-500/30">Step 1 of 4</span>
-                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Aap kis market me LIVE trade dekhna aur seekhna chahte hain?</h3>
-                        <p class="text-xs text-slate-400 mt-1">Select your primary trading interest:</p>
-                    </div>
-                    <div class="space-y-2.5">
-                        <button type="button" onclick="selectAnswer(1, 'segment', 'Nifty / BankNifty Options (Index F&O)')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">1</span>
-                                Nifty / BankNifty Options (Index F&O)
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                        <button type="button" onclick="selectAnswer(1, 'segment', 'Stock Options & Intraday Cash Equities')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">2</span>
-                                Stock Options & Intraday Cash Equities
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                        <button type="button" onclick="selectAnswer(1, 'segment', 'Crypto, Forex & MCX Commodities')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">3</span>
-                                Crypto, Forex & MCX Commodities (Crude/Gold)
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- STEP 2: BIGGEST TRADING FRUSTRATION -->
-                <div id="step2" class="quiz-step hidden">
-                    <div class="mb-4">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30">Step 2 of 4</span>
-                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Trading me aapka sabse bada frustration kya hai?</h3>
-                        <p class="text-xs text-slate-400 mt-1">Select your primary pain point:</p>
-                    </div>
-                    <div class="space-y-2.5">
-                        <button type="button" onclick="selectAnswer(2, 'frustration', 'Fake Screenshots & Scam Channels Se Thak Chuka Hoon')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-red-500/20 flex items-center justify-center text-xs font-bold text-red-400">A</span>
-                                Fake Screenshots & Scam Recovery Channels se thak chuka hoon
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                        <button type="button" onclick="selectAnswer(2, 'frustration', 'Theory Pata Hai Par Live Market Me Overtrading & Loss Hota Hai')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-amber-500/20 flex items-center justify-center text-xs font-bold text-amber-400">B</span>
-                                Theory sab pata hai, par live market me dar aur overtrading hoti hai
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                        <button type="button" onclick="selectAnswer(2, 'frustration', 'Live Market Me Right Entry Aur Stop-Loss Timing Nahi Milti')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-cyan-500/20 flex items-center justify-center text-xs font-bold text-brand-cyan">C</span>
-                                Live market me accurate entry aur safe stop-loss discipline nahi milti
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- STEP 3: MAIN GOAL -->
-                <div id="step3" class="quiz-step hidden">
-                    <div class="mb-4">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-500/20 text-brand-cyan border border-cyan-500/30">Step 3 of 4</span>
-                        <h3 class="font-heading font-bold text-lg sm:text-xl text-white mt-2">Hamare sath judne ka aapka main goal kya hai?</h3>
-                        <p class="text-xs text-slate-400 mt-1">What do you want to achieve:</p>
-                    </div>
-                    <div class="space-y-2.5">
-                        <button type="button" onclick="selectAnswer(3, 'goal', 'Live Market Me Samne Trade Karke Profit Kaise Banta Hai Seekhna')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">🎯</span>
-                                Samne baithkar live trade execution aur profit mindset seekhna
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                        <button type="button" onclick="selectAnswer(3, 'goal', 'Capital Bachana Aur Stop-Loss Trailing Master Karna')" class="quiz-option w-full p-3.5 rounded-xl bg-dark-700/80 border border-white/10 text-left text-sm font-semibold flex items-center justify-between text-slate-200">
-                            <span class="flex items-center gap-3">
-                                <span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-brand-neon">🛡️</span>
-                                Capital bachana aur strict loss control & risk management
-                            </span>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- STEP 4: LEAD CAPTURE FORM (NAME, PHONE, CITY) -->
-                <div id="step4" class="quiz-step hidden">
-                    <div class="text-center mb-4">
-                        <div class="w-12 h-12 rounded-2xl bg-brand-neon/20 text-brand-neon flex items-center justify-center mx-auto mb-2 border border-brand-neon/40">
-                            <i data-lucide="check-circle" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="font-heading font-bold text-xl text-white">VIP Slot Qualified! 🎉</h3>
-                        <p class="text-xs text-slate-300 mt-1">Apna details enter karein taaki aapka slot reserve ho sake aur aap live trades dekh sakein:</p>
-                    </div>
-
-                    <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
-                            <div class="relative">
-                                <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
-                                <input type="text" id="leadName" required placeholder="e.g. Rahul Sharma" class="w-full pl-9 pr-3 py-2.5 bg-dark-900 border border-white/15 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Phone Number</label>
-                            <div class="relative flex">
-                                <span class="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-white/15 bg-dark-900 text-brand-neon font-bold text-xs">+91</span>
-                                <input type="tel" id="leadPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="9876543210" class="w-full px-3 py-2.5 bg-dark-900 border border-white/15 rounded-r-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
-                            </div>
-                            <p class="text-[10px] text-slate-400 mt-0.5">Live Zoom session updates isi number par verify honge.</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">City / Location</label>
-                            <div class="relative">
-                                <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
-                                <input type="text" id="leadCity" required placeholder="e.g. Mumbai / Delhi / Bengaluru" class="w-full pl-9 pr-3 py-2.5 bg-dark-900 border border-white/15 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon transition">
-                            </div>
-                        </div>
-
-                        <button type="submit" id="submitBtn" class="w-full mt-3 py-3.5 px-4 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm shadow-xl shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition duration-200 flex items-center justify-center gap-2">
-                            <i data-lucide="monitor-play" class="w-4 h-4"></i>
-                            <span>Reserve Slot & See Live Trades</span>
-                        </button>
-                    </form>
-                </div>
-
-                <!-- SUCCESS STEP (DIRECT ACCESS LINK) -->
-                <div id="stepSuccess" class="quiz-step hidden text-center py-5">
-                    <div class="w-16 h-16 rounded-3xl bg-brand-neon/20 text-brand-neon flex items-center justify-center mx-auto mb-3 border border-brand-neon/40 animate-bounce">
-                        <i data-lucide="monitor-play" class="w-8 h-8 fill-brand-neon/30"></i>
-                    </div>
-                    <h3 class="font-heading font-extrabold text-2xl text-white mb-1">Slot Reserved! 🎉</h3>
-                    <p class="text-xs text-slate-300 max-w-sm mx-auto mb-4">
-                        Aapka live trade slot confirm ho gaya hai. Niche button par click karke turant <strong>Live Trading Access Link</strong> payein:
-                    </p>
-
-                    <!-- Lead Summary Card -->
-                    <div class="p-3.5 rounded-2xl bg-dark-900 border border-white/10 text-left mb-5 max-w-xs mx-auto space-y-1.5 text-xs">
-                        <div class="flex justify-between"><span class="text-slate-400">Name:</span> <strong id="resName" class="text-white">-</strong></div>
-                        <div class="flex justify-between"><span class="text-slate-400">WhatsApp:</span> <strong id="resPhone" class="text-white">-</strong></div>
-                        <div class="flex justify-between"><span class="text-slate-400">City:</span> <strong id="resCity" class="text-white">-</strong></div>
-                        <div class="flex justify-between"><span class="text-slate-400">Status:</span> <span class="text-brand-neon font-bold">100% Free VIP Slot</span></div>
-                    </div>
-
-                    <!-- Direct Access CTA Button -->
-                    <a id="waGroupJoinBtn" href="${TELEGRAM_CHANNEL_URL}" onclick="trackWhatsAppGroupConversion()" target="_blank" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2">
-                        <i data-lucide="send" class="w-5 h-5 fill-black"></i>
-                        <span>Click Here: Access Telegram Channel & See Live Trades</span>
-                    </a>
-                    
-                    <p class="text-[11px] text-slate-400 mt-3 flex items-center justify-center gap-1">
-                        <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin text-brand-neon"></i>
-                        <span>Opening Telegram Channel automatically in a moment...</span>
-                    </p>
-                </div>
-            `;
-            lucide.createIcons();
-        }
-
+        // Modal Management
         const modal = document.getElementById('quizModal');
         const modalBox = document.getElementById('modalBox');
         let currentStep = 1;
@@ -687,57 +608,11 @@
             city: ''
         };
 
-        function trackWhatsAppGroupConversion() {
-            if (typeof fbq === 'function') {
-                try {
-                    // Standard Meta Pixel Event for Engagement Ad Campaigns (Subscribe)
-                    fbq('track', 'Subscribe', {
-                        content_name: 'Live Screen Trading Session',
-                        currency: 'INR',
-                        value: 50.0,
-                        fbc: currentFbc,
-                        fbp: currentFbp,
-                        status: 'subscribed'
-                    });
-                    fbq('track', 'Contact', {
-                        content_name: 'Live Trading Access',
-                        channel: 'Telegram'
-                    });
-                    fbq('trackCustom', 'Reserve_Live_Trades_Clicked', {
-                        content_name: 'Live Trading Access Click'
-                    });
-                } catch(e) {
-                    console.error('Meta Pixel Subscribe error:', e);
-                }
-            }
-
-            // Image beacon fallback for guaranteed delivery to Meta
-            try {
-                var subImg = new Image();
-                subImg.src = 'https://www.facebook.com/tr?id=1161491586437268&ev=Subscribe&noscript=1&cd[content_name]=LiveTradingAccessSubscribed&cd[value]=50.0&cd[currency]=INR';
-            } catch(e) {}
-        }
-
         function openQuizModal(source = 'general') {
-            injectTradingFunnel();
             modal.classList.remove('opacity-0', 'pointer-events-none');
             modalBox.classList.remove('scale-95');
             modalBox.classList.add('scale-100');
-
-            if (typeof fbq === 'function') {
-                try {
-                    fbq('trackCustom', 'Subscribe_Button_Clicked', {
-                        button_location: source,
-                        fbc: currentFbc,
-                        fbp: currentFbp
-                    });
-                } catch(e) {}
-            }
-        }
-
-        function testSubscribePixel() {
-            trackWhatsAppGroupConversion();
-            alert("✅ Meta 'Subscribe' event pixel fired successfully!\nCheck your Meta Pixel Helper extension to verify.");
+            lucide.createIcons();
         }
 
         function closeQuizModal() {
@@ -745,25 +620,6 @@
             modalBox.classList.remove('scale-100');
             modalBox.classList.add('scale-95');
         }
-
-        // Initialize Page
-        window.addEventListener('DOMContentLoaded', () => {
-            if (isMetaBot()) {
-                document.getElementById('btnBotMode').className = "px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-indigo-600 text-white";
-                document.getElementById('btnUserMode').className = "px-2.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 text-slate-300 hover:bg-white/10";
-            } else {
-                renderFullTradingPage();
-                setTimeout(() => {
-                    if (!sessionStorage.getItem('leadSubmitted')) {
-                        openQuizModal();
-                    }
-                }, 700);
-            }
-
-            if (isAdminParam) {
-                setTimeout(openLeadsAdminModal, 500);
-            }
-        });
 
         function updateProgressBar(step) {
             const percentage = Math.round((step / totalSteps) * 100);
@@ -776,7 +632,6 @@
         function selectAnswer(stepNumber, key, answer) {
             leadData[key] = answer;
 
-            // Micro-conversion signals to train Meta's AI algorithm on real interested traders
             if (typeof fbq === 'function') {
                 try {
                     if (stepNumber === 1) {
@@ -785,17 +640,10 @@
                             fbc: currentFbc,
                             fbp: currentFbp
                         });
-                    } else if (stepNumber === 2) {
-                        fbq('trackCustom', 'Trader_Frustration_Identified', {
-                            frustration: answer,
-                            fbc: currentFbc,
-                            fbp: currentFbp
-                        });
                     } else if (stepNumber === 3) {
-                        // Reached lead form step
                         fbq('track', 'ViewContent', {
                             content_name: 'Lead_Form_Reached',
-                            content_category: leadData.segment || 'Live Trading',
+                            content_category: leadData.segment || 'Live Analysis',
                             value: 15.0,
                             currency: 'INR'
                         });
@@ -807,6 +655,29 @@
             currentStep = stepNumber + 1;
             document.getElementById(`step${currentStep}`).classList.remove('hidden');
             updateProgressBar(currentStep);
+        }
+
+        function trackWhatsAppGroupConversion() {
+            if (typeof fbq === 'function') {
+                try {
+                    fbq('track', 'Subscribe', {
+                        content_name: 'Live Screen Analysis Session',
+                        currency: 'INR',
+                        value: 50.0,
+                        fbc: currentFbc,
+                        fbp: currentFbp,
+                        status: 'subscribed'
+                    });
+                } catch(e) {
+                    console.error('Meta Pixel Subscribe error:', e);
+                }
+            }
+
+            // Image beacon fallback for guaranteed transmission to Meta
+            try {
+                var subImg = new Image();
+                subImg.src = 'https://www.facebook.com/tr?id=1161491586437268&ev=Subscribe&noscript=1&cd[content_name]=LiveTradingAccessSubscribed&cd[value]=50.0&cd[currency]=INR';
+            } catch(e) {}
         }
 
         function handleLeadSubmit(e) {
@@ -824,26 +695,23 @@
             leadData.phone = phone;
             leadData.city = city;
 
-            // Trigger Confetti
+            // Trigger celebratory confetti
             if (typeof confetti === 'function') {
                 confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
             }
 
-            // 1. Fire Meta Pixel Events with Advanced Matching Data (Solves attribution & match drop issue)
+            // 1. Fire Meta Pixel Events with Advanced Matching Data
             if (typeof fbq === 'function') {
                 try {
-                    // Extract normalized phone (+91 format: 919876543210)
                     var digits = phone.replace(/\D/g, '');
                     if (digits.length === 10) digits = '91' + digits;
 
-                    // Extract name parts
                     var nameTrimmed = name.trim().toLowerCase();
                     var nameParts = nameTrimmed.split(/\s+/);
                     var firstName = nameParts[0] || '';
                     var lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
                     var cityTrimmed = (city || '').trim().toLowerCase();
 
-                    // Re-init with Advanced Matching Data for 95%+ attribution match
                     fbq('init', '1161491586437268', {
                         ph: digits,
                         fn: firstName,
@@ -854,9 +722,9 @@
 
                     var eventId = 'lead_' + Date.now();
 
-                    // Fire Lead event with Value Optimization & first-party fbc/fbp
+                    // Fire Lead event
                     fbq('track', 'Lead', {
-                        content_name: 'Live Trading Lead',
+                        content_name: 'Live Analysis Session Lead',
                         content_category: leadData.segment || 'Stock Market',
                         currency: 'INR',
                         value: 50.0,
@@ -867,7 +735,7 @@
 
                     // Fire CompleteRegistration event
                     fbq('track', 'CompleteRegistration', {
-                        content_name: 'VIP Trading Community Registration',
+                        content_name: 'Live Analysis Session Registration',
                         currency: 'INR',
                         status: 'completed',
                         value: 50.0,
@@ -875,9 +743,9 @@
                         fbp: currentFbp
                     }, { eventID: eventId });
 
-                    // Fire Subscribe event (Standard Meta event for Engagement Campaigns)
+                    // Fire Subscribe event
                     fbq('track', 'Subscribe', {
-                        content_name: 'VIP Live Trading Community Subscription',
+                        content_name: 'Live Analysis Session Community',
                         currency: 'INR',
                         value: 50.0,
                         fbc: currentFbc,
@@ -889,7 +757,7 @@
                 }
             }
 
-            // Image Beacon Fallback to guarantee transmission even if JS SDK is blocked/slow
+            // Fallback Image Beacons
             try {
                 var fallbackImg = new Image();
                 fallbackImg.src = 'https://www.facebook.com/tr?id=1161491586437268&ev=Lead&noscript=1&cd[content_name]=LiveTradingLead&cd[value]=50.0&cd[currency]=INR';
@@ -897,49 +765,46 @@
                 fallbackSubImg.src = 'https://www.facebook.com/tr?id=1161491586437268&ev=Subscribe&noscript=1&cd[content_name]=VIPLiveTradingSubscription&cd[value]=50.0&cd[currency]=INR';
             } catch(e) {}
 
-            // 2. Reliably Save Lead to LocalStorage
+            // 2. Save Lead to LocalStorage
             const newLeadRecord = {
                 id: 'LEAD_' + Date.now(),
                 name: name,
                 phone: phone,
                 city: city,
-                segment: leadData.segment || 'Nifty/BankNifty Options',
-                frustration: leadData.frustration || '-',
-                goal: leadData.goal || '-',
+                segment: leadData.segment || 'General Market',
+                frustration: leadData.frustration || 'Overtrading & Discipline',
+                goal: leadData.goal || 'Live Analysis Observation',
+                timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
                 fbc: currentFbc,
-                fbp: currentFbp,
-                timestamp: new Date().toISOString(),
-                createdAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+                fbp: currentFbp
             };
 
-            const storedLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
-            storedLeads.unshift(newLeadRecord);
-            localStorage.setItem('trading_leads', JSON.stringify(storedLeads));
-            sessionStorage.setItem('leadSubmitted', 'true');
-            updateLeadsCountBadge();
+            try {
+                const existingLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
+                existingLeads.unshift(newLeadRecord);
+                localStorage.setItem('trading_leads', JSON.stringify(existingLeads));
+                sessionStorage.setItem('leadSubmitted', 'true');
+            } catch(e) {}
 
-            // 3. Post to Live Google Sheet Webhook
-            if (GOOGLE_SHEET_WEBHOOK_URL) {
+            // 3. Post to Google Sheet Webhook
+            if (GOOGLE_SHEET_WEBHOOK_URL && GOOGLE_SHEET_WEBHOOK_URL.startsWith('http')) {
                 try {
                     fetch(GOOGLE_SHEET_WEBHOOK_URL, {
                         method: 'POST',
                         mode: 'no-cors',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(newLeadRecord)
-                    });
-                } catch(err) {
-                    console.log('Google Sheet Webhook log:', err);
-                }
+                    }).catch(function(e) {});
+                } catch(err) {}
             }
 
-            // Show Success View
+            // 4. Show Success Step
             document.getElementById('step4').classList.add('hidden');
             document.getElementById('stepSuccess').classList.remove('hidden');
             document.getElementById('resName').textContent = name;
             document.getElementById('resPhone').textContent = '+91 ' + phone;
             document.getElementById('resCity').textContent = city;
 
-            // Direct link to Telegram Channel
             document.getElementById('waGroupJoinBtn').href = TELEGRAM_CHANNEL_URL;
 
             // Automatically open Telegram channel link after 1.8 seconds & fire Subscribe conversion
@@ -952,17 +817,73 @@
         }
 
         // ==============================================================
-        // 📊 LEADS MANAGEMENT & CSV EXPORTER FUNCTIONS
+        // 📄 LEGAL MODAL LOGIC
         // ==============================================================
-        function updateLeadsCountBadge() {
-            const storedLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
-            const count = storedLeads.length;
-            const badge1 = document.getElementById('leadsCountBadge');
-            const badge2 = document.getElementById('adminTotalLeads');
-            if (badge1) badge1.textContent = count;
-            if (badge2) badge2.textContent = count;
+        const legalTexts = {
+            privacy: {
+                title: "Privacy Policy",
+                content: `
+                    <p class="font-bold text-white mb-2">1. Information Collection & Usage</p>
+                    <p>Trade With Yogesh collects personal details such as your Name, Phone Number, and City solely for the purpose of granting you access to live market educational sessions, webinar schedules, and relevant market updates.</p>
+                    <p class="font-bold text-white mt-4 mb-2">2. Data Security & Confidentiality</p>
+                    <p>We do not sell, rent, or trade your personal information to third-party marketing companies. All details provided are encrypted and handled responsibly in accordance with Indian information privacy standards.</p>
+                    <p class="font-bold text-white mt-4 mb-2">3. Communications & Opt-Out</p>
+                    <p>By submitting your phone number on this landing page, you agree to receive communications via WhatsApp, SMS, or Telegram regarding live market educational schedules. You may opt out anytime by replying STOP or contacting support.</p>
+                `
+            },
+            terms: {
+                title: "Terms & Conditions",
+                content: `
+                    <p class="font-bold text-white mb-2">1. Educational Scope</p>
+                    <p>All programs, live market screen sharing, chart observations, and commentary provided by Trade With Yogesh are intended strictly for educational, observational, and technical analysis learning purposes.</p>
+                    <p class="font-bold text-white mt-4 mb-2">2. No Financial Advice or Guarantees</p>
+                    <p>We do not offer guaranteed returns, assured profit schemes, tip services, or portfolio management. Any financial market decision taken by you is entirely at your own risk and discretion.</p>
+                    <p class="font-bold text-white mt-4 mb-2">3. Intellectual Property</p>
+                    <p>All training frameworks, course notes, chart templates, and content provided are intellectual property of Trade With Yogesh and may not be redistributed without permission.</p>
+                `
+            },
+            disclaimer: {
+                title: "SEBI Risk & Statutory Disclosure",
+                content: `
+                    <p class="font-bold text-white mb-2">1. SEBI Registration Details</p>
+                    <p>Trade With Yogesh is operating under SEBI Registered Research Analyst Registration Number: <strong class="text-brand-neon">INH000025294</strong>.</p>
+                    <p class="font-bold text-white mt-4 mb-2">2. Statutory Market Risk Warning</p>
+                    <p>Investment in securities market are subject to market risks. Read all the related documents carefully before investing. Registration granted by SEBI and certification from NISM in no way guarantee performance of the intermediary or provide any assurance of returns to investors.</p>
+                    <p class="font-bold text-white mt-4 mb-2">3. SEBI Warning on Derivatives Trading</p>
+                    <p>According to SEBI study, 9 out of 10 individual traders in equity futures and options segment incur net losses. Trading in derivatives involves substantial risk of loss and is not suitable for every investor.</p>
+                `
+            },
+            contact: {
+                title: "Contact & Grievance Redressal",
+                content: `
+                    <p class="font-bold text-white mb-2">Trade With Yogesh</p>
+                    <p class="text-slate-300">SEBI Registered Research Analyst: <strong class="text-white">INH000025294</strong></p>
+                    <p class="mt-2 text-slate-300">For inquiries, support, or grievance redressal regarding educational sessions and access links:</p>
+                    <div class="mt-3 p-3 bg-dark-900 rounded-xl border border-white/10 space-y-1">
+                        <p><strong class="text-white">Email:</strong> support@tradewithyogesh.com</p>
+                        <p><strong class="text-white">WhatsApp Support:</strong> +91 8373929146</p>
+                        <p><strong class="text-white">Official Telegram:</strong> https://telegram.me/+RFCxC7-EfMk3Y2U1</p>
+                    </div>
+                `
+            }
+        };
+
+        function openLegalModal(type) {
+            const data = legalTexts[type] || legalTexts.privacy;
+            document.getElementById('legalModalTitle').textContent = data.title;
+            document.getElementById('legalModalContent').innerHTML = data.content;
+            const modal = document.getElementById('legalModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
         }
 
+        function closeLegalModal() {
+            const modal = document.getElementById('legalModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        // ==============================================================
+        // 📊 ADMIN LEADS DASHBOARD FUNCTIONS
+        // ==============================================================
         function openLeadsAdminModal() {
             const modal = document.getElementById('leadsAdminModal');
             modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -988,34 +909,36 @@
                        (lead.city || '').toLowerCase().includes(search);
             });
 
+            document.getElementById('adminTotalLeads').textContent = storedLeads.length;
+
             if (filtered.length === 0) {
                 noLeadsMsg.classList.remove('hidden');
-            } else {
-                noLeadsMsg.classList.add('hidden');
-                filtered.forEach(lead => {
-                    const tr = document.createElement('tr');
-                    tr.className = "hover:bg-white/5 transition";
-                    tr.innerHTML = `
-                        <td class="p-2.5 text-slate-400">${lead.createdAt || new Date(lead.timestamp).toLocaleDateString()}</td>
-                        <td class="p-2.5 font-bold text-white">${lead.name}</td>
-                        <td class="p-2.5">
-                            <a href="https://wa.me/91${lead.phone}" target="_blank" class="text-brand-neon hover:underline flex items-center gap-1 font-semibold">
-                                +91 ${lead.phone}
-                            </a>
-                        </td>
-                        <td class="p-2.5 text-slate-300">${lead.city || '-'}</td>
-                        <td class="p-2.5 text-slate-400 max-w-[140px] truncate" title="${lead.segment}">${lead.segment || '-'}</td>
-                        <td class="p-2.5 text-slate-400 max-w-[140px] truncate" title="${lead.goal}">${lead.goal || '-'}</td>
-                        <td class="p-2.5 text-center">
-                            <a href="https://wa.me/91${lead.phone}" target="_blank" class="px-2 py-1 rounded bg-[#25D366]/20 text-[#25D366] hover:bg-[#25D366]/30 font-bold text-[10px]">
-                                WhatsApp
-                            </a>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
+                return;
             }
-            updateLeadsCountBadge();
+            noLeadsMsg.classList.add('hidden');
+
+            filtered.forEach(lead => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-white/5 transition';
+                tr.innerHTML = `
+                    <td class="p-2.5 text-slate-400 text-[11px] whitespace-nowrap">${lead.timestamp || '-'}</td>
+                    <td class="p-2.5 font-bold text-white whitespace-nowrap">${lead.name || '-'}</td>
+                    <td class="p-2.5 text-brand-neon font-semibold whitespace-nowrap">
+                        <a href="https://wa.me/91${lead.phone}" target="_blank" class="hover:underline flex items-center gap-1">
+                            +91 ${lead.phone || '-'}
+                        </a>
+                    </td>
+                    <td class="p-2.5 text-slate-300 whitespace-nowrap">${lead.city || '-'}</td>
+                    <td class="p-2.5 text-slate-300 max-w-[150px] truncate">${lead.segment || '-'}</td>
+                    <td class="p-2.5 text-slate-300 max-w-[150px] truncate">${lead.goal || '-'}</td>
+                    <td class="p-2.5 text-center">
+                        <a href="https://wa.me/91${lead.phone}?text=Hello%20${encodeURIComponent(lead.name || '')},%20Trade%20With%20Yogesh%20SEBI%20Registered%20live%20analysis%20session%20details:" target="_blank" class="px-2 py-1 bg-emerald-500/20 text-brand-neon hover:bg-emerald-500/30 rounded font-bold text-[10px] inline-flex items-center gap-1">
+                            Chat WhatsApp
+                        </a>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         function filterAdminLeads() {
@@ -1033,7 +956,7 @@
             const headers = ['ID', 'Date & Time', 'Full Name', 'WhatsApp Number', 'City', 'Market Segment', 'Frustration', 'Goal'];
             const rows = storedLeads.map(lead => [
                 `"${lead.id || ''}"`,
-                `"${lead.createdAt || lead.timestamp || ''}"`,
+                `"${lead.timestamp || ''}"`,
                 `"${(lead.name || '').replace(/"/g, '""')}"`,
                 `"+91 ${lead.phone || ''}"`,
                 `"${(lead.city || '').replace(/"/g, '""')}"`,
@@ -1057,9 +980,17 @@
             if (confirm("Are you sure you want to clear all saved leads from this browser? Make sure you downloaded the CSV first!")) {
                 localStorage.removeItem('trading_leads');
                 renderAdminLeadsTable();
-                updateLeadsCountBadge();
             }
         }
+
+        // Initialize Page
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            if (isAdminParam) {
+                setTimeout(openLeadsAdminModal, 500);
+            }
+        });
     </script>
 </body>
 </html>
