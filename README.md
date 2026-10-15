@@ -5,7 +5,6 @@
 - **Registration:** SEBI Registered Research Analyst (Reg No: `INH000025294`)
 - **Official Telegram Channel:** `https://telegram.me/+RFCxC7-EfMk3Y2U1`
 - **WhatsApp Support:** `+91 8373929146`
-- **Support Email:** `support@tradewithyogesh.com`
 
 ---
 
