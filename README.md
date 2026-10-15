@@ -27,4 +27,4 @@
 
 ## 🛡️ Meta Ads Bot & Conversion Tracking
 - **Safe White Page for Meta Bots:** `http://localhost:3000/?view=bot`
-- **Meta Pixel Tracking (ID 2147810905619960):** Fires `PageView`, `Lead`, and `CompleteRegistration` when the user submits their profile and joins the WhatsApp group.
+- **Meta Pixel Tracking (ID 1161491586437268):** Fires `PageView`, `Lead`, and `CompleteRegistration` when the user submits their profile and joins the WhatsApp group.
