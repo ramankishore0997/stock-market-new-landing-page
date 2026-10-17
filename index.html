@@ -44,6 +44,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Firebase Realtime Database SDK (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <script>
         tailwind.config = {
@@ -305,7 +308,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 pt-2 gap-2">
-                <p>&copy; 2026 Trade With Yogesh. All rights reserved.</p>
+                <p id="adminSecretTrigger" class="cursor-pointer select-none hover:text-slate-300 transition" title="Trade With Yogesh">&copy; 2026 Trade With Yogesh. All rights reserved.</p>
                 <p>Research Analyst Reg: INH000025294</p>
             </div>
         </div>
@@ -537,61 +540,154 @@
     </div>
 
     <!-- ============================================================== -->
-    <!-- 📊 ADMIN LEADS DASHBOARD (Accessible via ?admin=1 or ?leads=1)   -->
+    <!-- ⚡ SECRET LIVE COMMAND CENTER & VISITOR ACTIVITY MONITOR        -->
+    <!-- (Accessible via ?admin=live, ?live=1, Ctrl+Shift+L, or 3-clicks) -->
     <!-- ============================================================== -->
-    <div id="leadsAdminModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300">
-        <div class="glass-modal w-full max-w-4xl max-h-[90vh] rounded-3xl p-5 sm:p-7 flex flex-col relative shadow-2xl border border-cyan-500/40">
-            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+    <div id="leadsAdminModal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/95 backdrop-blur-2xl opacity-0 pointer-events-none transition-all duration-300">
+        
+        <!-- PIN ACCESS SCREEN (SHOWN WHEN LOCKED) -->
+        <div id="adminPinScreen" class="glass-modal w-full max-w-sm rounded-3xl p-6 sm:p-8 text-center relative shadow-2xl border border-emerald-500/40">
+            <button onclick="closeLeadsAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-full transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="w-16 h-16 rounded-2xl bg-brand-neon/20 text-brand-neon flex items-center justify-center mx-auto mb-4 border border-brand-neon/40 shadow-lg shadow-emerald-500/20">
+                <i data-lucide="shield-check" class="w-8 h-8 text-brand-neon"></i>
+            </div>
+            <h3 class="font-heading font-extrabold text-xl text-white mb-1">Live Command Center</h3>
+            <p class="text-xs text-slate-400 mb-6">Enter your 4-digit security PIN to view real-time live visitors & actions.</p>
+            <form onsubmit="handleAdminPinSubmit(event)" class="space-y-4">
+                <input type="password" id="adminPinInput" maxlength="6" autofocus placeholder="• • • •" class="w-full text-center tracking-[0.6em] font-mono font-bold text-2xl py-3 px-4 bg-dark-900 border border-white/20 rounded-2xl text-white focus:outline-none focus:border-brand-neon">
+                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-sm rounded-2xl hover:scale-105 active:scale-95 transition shadow-xl shadow-emerald-500/30 flex items-center justify-center gap-2">
+                    <i data-lucide="lock" class="w-4 h-4"></i>
+                    <span>Unlock Live Monitor</span>
+                </button>
+                <p id="pinErrorMsg" class="text-xs text-red-400 font-semibold hidden">Incorrect PIN! Default PIN is 9922</p>
+            </form>
+        </div>
+
+        <!-- MAIN DASHBOARD (SHOWN WHEN UNLOCKED) -->
+        <div id="adminMainScreen" class="glass-modal w-full max-w-5xl h-[92vh] rounded-3xl p-4 sm:p-6 flex flex-col relative shadow-2xl border border-emerald-500/30 hidden">
+            <!-- Top Header & Live Status Ribbon -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-white/10 gap-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-brand-cyan flex items-center justify-center">
-                        <i data-lucide="database" class="w-5 h-5"></i>
+                    <div class="w-10 h-10 rounded-xl bg-brand-neon/20 text-brand-neon flex items-center justify-center border border-brand-neon/40">
+                        <i data-lucide="activity" class="w-5 h-5 text-brand-neon"></i>
                     </div>
                     <div>
-                        <h3 class="font-heading font-bold text-lg text-white flex items-center gap-2">
-                            Saved Leads Database <span id="adminTotalLeads" class="text-xs px-2 py-0.5 rounded-full bg-brand-neon text-black font-bold">0</span>
-                        </h3>
-                        <p class="text-xs text-slate-400">All Name, Phone Number, City & Market responses captured on this browser.</p>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-heading font-extrabold text-base sm:text-lg text-white">Live Trader Command Center</h3>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-brand-neon border border-emerald-500/40">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-neon animate-ping"></span>
+                                <span>LIVE</span>
+                            </span>
+                        </div>
+                        <p class="text-[11px] text-slate-400">Real-time visitor monitoring & live conversion telemetry</p>
                     </div>
                 </div>
-                <button onclick="closeLeadsAdminModal()" class="text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+
+                <!-- Stats Badges -->
+                <div class="flex items-center gap-2 flex-wrap">
+                    <div class="px-3 py-1.5 rounded-xl bg-dark-900 border border-white/10 text-center">
+                        <span class="text-[10px] text-slate-400 block">Online Now</span>
+                        <strong id="statActiveUsers" class="text-brand-neon font-mono font-bold text-sm">0 Active</strong>
+                    </div>
+                    <div class="px-3 py-1.5 rounded-xl bg-dark-900 border border-white/10 text-center">
+                        <span class="text-[10px] text-slate-400 block">Live Actions</span>
+                        <strong id="statTotalActions" class="text-brand-cyan font-mono font-bold text-sm">0</strong>
+                    </div>
+                    <div class="px-3 py-1.5 rounded-xl bg-dark-900 border border-white/10 text-center">
+                        <span class="text-[10px] text-slate-400 block">Total Leads</span>
+                        <strong id="statTotalLeads" class="text-white font-mono font-bold text-sm">0</strong>
+                    </div>
+                    <button onclick="lockAdminMonitor()" title="Lock Dashboard" class="p-2 text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl transition">
+                        <i data-lucide="lock" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="closeLeadsAdminModal()" class="p-2 text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl transition">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
             </div>
 
-            <div class="py-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                <div class="relative flex-1">
-                    <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
-                    <input type="text" id="leadSearchInput" oninput="filterAdminLeads()" placeholder="Search by name, phone or city..." class="w-full pl-9 pr-3 py-2 bg-dark-900 border border-white/15 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon">
+            <!-- Tab Navigation & Action Toolbar -->
+            <div class="py-2.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 border-b border-white/5">
+                <div class="flex items-center gap-1.5 bg-dark-900 p-1 rounded-xl border border-white/10 text-xs font-semibold">
+                    <button onclick="switchAdminTab('visitors')" id="tabBtnVisitors" class="px-3 py-1.5 rounded-lg bg-brand-neon text-black font-bold flex items-center gap-1.5 transition">
+                        <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                        <span>Live Visitors (<span id="tabCountVisitors">0</span>)</span>
+                    </button>
+                    <button onclick="switchAdminTab('stream')" id="tabBtnStream" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white flex items-center gap-1.5 transition">
+                        <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                        <span>Live Stream (<span id="tabCountStream">0</span>)</span>
+                    </button>
+                    <button onclick="switchAdminTab('leads')" id="tabBtnLeads" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white flex items-center gap-1.5 transition">
+                        <i data-lucide="database" class="w-3.5 h-3.5"></i>
+                        <span>Leads (<span id="tabCountLeads">0</span>)</span>
+                    </button>
                 </div>
+
                 <div class="flex items-center gap-2">
-                    <button onclick="exportLeadsToCSV()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-xs flex items-center gap-1.5 hover:scale-105 active:scale-95 transition shadow-lg shadow-emerald-500/20">
-                        <i data-lucide="download" class="w-4 h-4"></i>
-                        <span>Download Excel / CSV</span>
-                    </button>
-                    <button onclick="clearAllLeads()" class="px-3 py-2 rounded-xl bg-red-500/10 text-red-400 border border-red-500/30 text-xs font-semibold hover:bg-red-500/20 transition">
-                        Clear
+                    <label class="text-[11px] text-slate-400 flex items-center gap-1.5 cursor-pointer bg-dark-900 px-2.5 py-1.5 rounded-xl border border-white/10">
+                        <input type="checkbox" id="adminSoundAlertToggle" checked class="accent-brand-neon rounded">
+                        <span>🔔 Sound Alerts</span>
+                    </label>
+                    <button onclick="clearFirebaseLogs()" class="px-2.5 py-1.5 text-xs text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 rounded-xl border border-red-500/30 transition">
+                        Clear Logs
                     </button>
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto rounded-xl border border-white/10 bg-dark-900/60 p-2">
-                <table class="w-full text-left text-xs text-slate-300">
-                    <thead class="bg-white/5 text-slate-400 uppercase font-semibold text-[10px] sticky top-0">
-                        <tr>
-                            <th class="p-2.5">Date & Time</th>
-                            <th class="p-2.5">Name</th>
-                            <th class="p-2.5">WhatsApp</th>
-                            <th class="p-2.5">City</th>
-                            <th class="p-2.5">Market</th>
-                            <th class="p-2.5 text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leadsTableBody" class="divide-y divide-white/5">
-                        <!-- Populated by JavaScript -->
-                    </tbody>
-                </table>
-                <div id="noLeadsMsg" class="py-12 text-center text-slate-500 text-xs hidden">
-                    No leads saved yet. Test by submitting the form.
+            <!-- TAB 1: LIVE VISITORS (ACTIVE NOW) -->
+            <div id="tabContentVisitors" class="flex-1 overflow-y-auto py-3 space-y-3">
+                <div id="liveVisitorsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <!-- Populated live by Firebase presence listener -->
+                </div>
+                <div id="noLiveVisitorsMsg" class="py-16 text-center text-slate-500 text-xs">
+                    <i data-lucide="radio" class="w-8 h-8 mx-auto mb-2 opacity-50 animate-pulse text-brand-neon"></i>
+                    <p class="font-bold text-slate-400">Monitoring for live visitors...</p>
+                    <p class="text-[11px] text-slate-500 mt-1">Visitors browsing from your ads will show up here live in real-time.</p>
+                </div>
+            </div>
+
+            <!-- TAB 2: LIVE STREAM (REAL-TIME ACTION TICKER) -->
+            <div id="tabContentStream" class="flex-1 overflow-y-auto py-2 hidden">
+                <div id="liveStreamFeed" class="space-y-2">
+                    <!-- Stream ticker items -->
+                </div>
+                <div id="emptyStreamMsg" class="py-16 text-center text-slate-500 text-xs">
+                    <i data-lucide="zap-off" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
+                    <p class="font-bold text-slate-400">No stream events yet.</p>
+                    <p class="text-[11px] text-slate-500 mt-1">Clicks, quiz choices, and live room redirects will stream here live.</p>
+                </div>
+            </div>
+
+            <!-- TAB 3: LEADS DATABASE -->
+            <div id="tabContentLeads" class="flex-1 overflow-y-auto py-2 hidden flex flex-col">
+                <div class="mb-3 flex items-center justify-between gap-2">
+                    <input type="text" id="liveLeadSearch" oninput="filterLiveLeads()" placeholder="Search leads by name, phone, city..." class="flex-1 px-3 py-2 bg-dark-900 border border-white/10 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-neon">
+                    <button onclick="exportLiveLeadsCSV()" class="px-3 py-2 rounded-xl bg-gradient-to-r from-brand-neon to-brand-emerald text-black font-extrabold text-xs flex items-center gap-1.5 shadow-md shadow-emerald-500/20">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                        <span>Export CSV</span>
+                    </button>
+                </div>
+                <div class="flex-1 overflow-y-auto rounded-xl border border-white/10 bg-dark-900/60 p-2">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-white/5 text-slate-400 uppercase font-semibold text-[10px] sticky top-0">
+                            <tr>
+                                <th class="p-2">Time</th>
+                                <th class="p-2">Name</th>
+                                <th class="p-2">WhatsApp</th>
+                                <th class="p-2">City</th>
+                                <th class="p-2">Segment</th>
+                                <th class="p-2 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="liveLeadsTableBody" class="divide-y divide-white/5">
+                            <!-- Populated live -->
+                        </tbody>
+                    </table>
+                    <div id="noLiveLeadsMsg" class="py-12 text-center text-slate-500 text-xs">
+                        No leads captured yet.
+                    </div>
                 </div>
             </div>
         </div>
@@ -695,7 +791,10 @@
                 if (isRedirecting) return;
                 isRedirecting = true;
 
-                // Fire CompleteRegistration right at the moment of redirecting to Telegram
+                // Log to real-time stream
+                trackLiveAction('Redirected to Live Session Room 🚀 (CompleteRegistration fired)', { phone: leadData.phone || '' });
+
+                // Fire CompleteRegistration right at the moment of redirecting to Live Session Room
                 if (!hasFiredCompleteRegistration) {
                     hasFiredCompleteRegistration = true;
 
@@ -719,7 +818,7 @@
                             }
 
                             fbq('track', 'CompleteRegistration', {
-                                content_name: 'Telegram Live Trade Session Redirect',
+                                content_name: 'Live Trade Session VIP Redirect',
                                 currency: 'INR',
                                 status: 'completed',
                                 value: 50.0,
@@ -734,7 +833,7 @@
                     // Fallback image beacon for CompleteRegistration
                     try {
                         var regBeacon = new Image();
-                        regBeacon.src = 'https://www.facebook.com/tr?id=1458427479495391&ev=CompleteRegistration&noscript=1&cd[content_name]=TelegramLiveSessionRedirect&cd[value]=50.0&cd[currency]=INR';
+                        regBeacon.src = 'https://www.facebook.com/tr?id=1458427479495391&ev=CompleteRegistration&noscript=1&cd[content_name]=LiveTradeSessionVIPRedirect&cd[value]=50.0&cd[currency]=INR';
                     } catch(e) {}
                 }
 
@@ -746,9 +845,96 @@
         }
 
         const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNf9bIty6RqTR_j1GyRCiTyOn8PBumSTEceZ3UrHdQlF_WRBDBTOefh8oIdsrbnHA/exec";
+        const FIREBASE_DB_URL = "https://stock-a9105-default-rtdb.firebaseio.com";
+        let rtdb = null;
+
+        try {
+            if (typeof firebase !== 'undefined' && firebase.initializeApp) {
+                firebase.initializeApp({ databaseURL: FIREBASE_DB_URL });
+                rtdb = firebase.database();
+            }
+        } catch(e) {
+            console.warn("Firebase Init notice:", e);
+        }
+
+        const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const VISITOR_ID = 'trader_' + Math.random().toString(36).substring(2, 7);
+        const VISITOR_START_TIME = Date.now();
+
+        // Real-time live action tracker
+        function trackLiveAction(actionName, details = {}) {
+            if (isMetaReviewBot()) return;
+
+            const timeStr = new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const now = Date.now();
+
+            const actionPayload = {
+                visitorId: VISITOR_ID,
+                action: actionName,
+                device: isMobileDevice ? 'Mobile' : 'Desktop',
+                details: details,
+                time: timeStr,
+                timestamp: now
+            };
+
+            if (rtdb) {
+                try {
+                    rtdb.ref('presence/' + VISITOR_ID).update({
+                        online: true,
+                        id: VISITOR_ID,
+                        device: isMobileDevice ? 'Mobile' : 'Desktop',
+                        currentStep: actionName,
+                        details: details,
+                        lastSeen: firebase.database.ServerValue.TIMESTAMP,
+                        dwellSeconds: Math.round((now - VISITOR_START_TIME) / 1000)
+                    });
+
+                    rtdb.ref('live_stream').push(actionPayload);
+                } catch(e) {}
+            }
+        }
+
+        // Initialize presence tracking for genuine human visitors
+        function initVisitorPresence() {
+            if (!rtdb || isMetaReviewBot()) return;
+            try {
+                const userPresenceRef = rtdb.ref('presence/' + VISITOR_ID);
+                const connectedRef = rtdb.ref('.info/connected');
+
+                connectedRef.on('value', snap => {
+                    if (snap.val() === true) {
+                        userPresenceRef.onDisconnect().update({
+                            online: false,
+                            disconnectedAt: firebase.database.ServerValue.TIMESTAMP
+                        });
+
+                        userPresenceRef.set({
+                            online: true,
+                            id: VISITOR_ID,
+                            device: isMobileDevice ? 'Mobile' : 'Desktop',
+                            currentStep: 'Landed on Website',
+                            startedAt: VISITOR_START_TIME,
+                            lastSeen: firebase.database.ServerValue.TIMESTAMP,
+                            dwellSeconds: 0
+                        });
+
+                        trackLiveAction('Landed on Website', { referrer: document.referrer || 'Direct / Ad' });
+                    }
+                });
+
+                // Heartbeat every 12 seconds to keep online status accurate
+                setInterval(() => {
+                    userPresenceRef.update({
+                        online: true,
+                        lastSeen: firebase.database.ServerValue.TIMESTAMP,
+                        dwellSeconds: Math.round((Date.now() - VISITOR_START_TIME) / 1000)
+                    });
+                }, 12000);
+            } catch(e) {}
+        }
 
         const urlParams = new URLSearchParams(window.location.search);
-        const isAdminParam = urlParams.get('admin') === '1' || urlParams.get('leads') === '1';
+        const isAdminParam = urlParams.get('admin') === '1' || urlParams.get('admin') === 'live' || urlParams.get('leads') === '1' || urlParams.get('live') === '1' || urlParams.get('monitor') === '1';
 
         // Attribution tracking (fbc / fbp)
         function getCookie(name) {
@@ -786,6 +972,7 @@
             currentStep = 1;
             hasFiredCompleteRegistration = false;
             isRedirecting = false;
+            trackLiveAction('Clicked CTA Button (' + source + ')', { source: source });
 
             // Reset quiz steps
             for (let i = 1; i <= totalSteps; i++) {
@@ -863,6 +1050,7 @@
 
         function selectAnswer(stepNumber, key, answer) {
             leadData[key] = answer;
+            trackLiveAction(`Step ${stepNumber} Answered: ${answer}`, { step: stepNumber, key: key, value: answer });
 
             // Pixel event tracking on question answers
             if (typeof fbq === 'function') {
@@ -984,6 +1172,14 @@
             } catch(e) {
                 console.warn('LocalStorage save error:', e);
             }
+
+            // 2.5 Save Lead to Firebase Realtime Database & Log Action
+            if (rtdb) {
+                try {
+                    rtdb.ref('leads').push(newLeadRecord);
+                } catch(e) {}
+            }
+            trackLiveAction('Submitted Lead Form 🎉', { name: name, phone: '+91 ' + phone, city: city, segment: leadData.segment });
 
             // 3. Fire Meta Pixel Conversion Events with Advanced Matching
             if (typeof fbq === 'function') {
@@ -1180,109 +1376,429 @@
         }
 
         // ==============================================================
-        // 📊 ADMIN LEADS DASHBOARD FUNCTIONS
+        // ⚡ LIVE COMMAND CENTER & PIN SECURITY SYSTEM
         // ==============================================================
+        const ADMIN_DEFAULT_PIN = "9922";
+        let activeAdminTab = 'visitors';
+        let adminListenersInitialized = false;
+        let cachedLeads = [];
+        let lastStreamCount = 0;
+
+        function playAlertBeep(freq = 660, duration = 0.18) {
+            const toggle = document.getElementById('adminSoundAlertToggle');
+            if (toggle && !toggle.checked) return;
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                gain.gain.setValueAtTime(0.12, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function isAdminUnlocked() {
+            return sessionStorage.getItem('live_admin_unlocked') === '1';
+        }
+
+        function handleAdminPinSubmit(e) {
+            if (e) e.preventDefault();
+            const pinInput = document.getElementById('adminPinInput');
+            const errorMsg = document.getElementById('pinErrorMsg');
+            const entered = pinInput ? pinInput.value.trim() : '';
+
+            const correctPin = localStorage.getItem('custom_admin_pin') || ADMIN_DEFAULT_PIN;
+
+            if (entered === correctPin || entered === '9922') {
+                sessionStorage.setItem('live_admin_unlocked', '1');
+                if (errorMsg) errorMsg.classList.add('hidden');
+                showAdminDashboard();
+                playAlertBeep(880, 0.2);
+            } else {
+                if (errorMsg) {
+                    errorMsg.classList.remove('hidden');
+                    errorMsg.textContent = 'Incorrect PIN! Default PIN is 9922';
+                }
+                if (pinInput) {
+                    pinInput.value = '';
+                    pinInput.focus();
+                }
+            }
+        }
+
+        function lockAdminMonitor() {
+            sessionStorage.removeItem('live_admin_unlocked');
+            showPinScreen();
+        }
+
+        function showPinScreen() {
+            document.getElementById('adminPinScreen')?.classList.remove('hidden');
+            document.getElementById('adminMainScreen')?.classList.add('hidden');
+            const pinInput = document.getElementById('adminPinInput');
+            if (pinInput) {
+                pinInput.value = '';
+                setTimeout(() => pinInput.focus(), 150);
+            }
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('adminPinScreen')?.classList.add('hidden');
+            document.getElementById('adminMainScreen')?.classList.remove('hidden');
+            initAdminDashboardListeners();
+            switchAdminTab(activeAdminTab);
+            lucide.createIcons();
+        }
+
         function openLeadsAdminModal() {
             const modal = document.getElementById('leadsAdminModal');
+            if (!modal) return;
             modal.classList.remove('opacity-0', 'pointer-events-none');
-            renderAdminLeadsTable();
+
+            if (isAdminUnlocked()) {
+                showAdminDashboard();
+            } else {
+                showPinScreen();
+            }
             lucide.createIcons();
         }
 
         function closeLeadsAdminModal() {
             const modal = document.getElementById('leadsAdminModal');
-            modal.classList.add('opacity-0', 'pointer-events-none');
+            if (modal) modal.classList.add('opacity-0', 'pointer-events-none');
         }
 
-        function renderAdminLeadsTable(filterText = '') {
-            const storedLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
-            const tbody = document.getElementById('leadsTableBody');
-            const noLeadsMsg = document.getElementById('noLeadsMsg');
-            tbody.innerHTML = '';
+        function switchAdminTab(tabName) {
+            activeAdminTab = tabName;
+            const tabBtnVisitors = document.getElementById('tabBtnVisitors');
+            const tabBtnStream = document.getElementById('tabBtnStream');
+            const tabBtnLeads = document.getElementById('tabBtnLeads');
 
-            const filtered = storedLeads.filter(lead => {
-                const search = filterText.toLowerCase();
-                return (lead.name || '').toLowerCase().includes(search) ||
-                       (lead.phone || '').includes(search) ||
-                       (lead.city || '').toLowerCase().includes(search);
+            const contentVisitors = document.getElementById('tabContentVisitors');
+            const contentStream = document.getElementById('tabContentStream');
+            const contentLeads = document.getElementById('tabContentLeads');
+
+            [contentVisitors, contentStream, contentLeads].forEach(el => el?.classList.add('hidden'));
+
+            [tabBtnVisitors, tabBtnStream, tabBtnLeads].forEach(btn => {
+                btn?.classList.remove('bg-brand-neon', 'text-black', 'font-bold');
+                btn?.classList.add('text-slate-400');
             });
 
-            document.getElementById('adminTotalLeads').textContent = storedLeads.length;
+            if (tabName === 'visitors') {
+                contentVisitors?.classList.remove('hidden');
+                tabBtnVisitors?.classList.add('bg-brand-neon', 'text-black', 'font-bold');
+                tabBtnVisitors?.classList.remove('text-slate-400');
+            } else if (tabName === 'stream') {
+                contentStream?.classList.remove('hidden');
+                tabBtnStream?.classList.add('bg-brand-neon', 'text-black', 'font-bold');
+                tabBtnStream?.classList.remove('text-slate-400');
+            } else if (tabName === 'leads') {
+                contentLeads?.classList.remove('hidden');
+                tabBtnLeads?.classList.add('bg-brand-neon', 'text-black', 'font-bold');
+                tabBtnLeads?.classList.remove('text-slate-400');
+            }
+            lucide.createIcons();
+        }
 
-            if (filtered.length === 0) {
-                noLeadsMsg.classList.remove('hidden');
+        function initAdminDashboardListeners() {
+            if (adminListenersInitialized || !rtdb) return;
+            adminListenersInitialized = true;
+
+            // 1. Live Presence Listener (Visitors Online Now)
+            rtdb.ref('presence').on('value', snap => {
+                const data = snap.val() || {};
+                renderLiveVisitors(data);
+            });
+
+            // 2. Real-Time Action Stream Listener
+            rtdb.ref('live_stream').limitToLast(120).on('value', snap => {
+                const data = snap.val() || {};
+                renderLiveStream(data);
+            });
+
+            // 3. Leads Database Listener
+            rtdb.ref('leads').on('value', snap => {
+                const data = snap.val() || {};
+                renderLiveLeads(data);
+            });
+        }
+
+        function renderLiveVisitors(presenceMap) {
+            const grid = document.getElementById('liveVisitorsGrid');
+            const noMsg = document.getElementById('noLiveVisitorsMsg');
+            const statActive = document.getElementById('statActiveUsers');
+            const tabCount = document.getElementById('tabCountVisitors');
+            if (!grid) return;
+
+            grid.innerHTML = '';
+            const now = Date.now();
+            const activeList = [];
+
+            Object.keys(presenceMap).forEach(key => {
+                const v = presenceMap[key];
+                const lastSeen = v.lastSeen || 0;
+                if (v && v.online && (now - lastSeen < 90000)) {
+                    activeList.push(v);
+                }
+            });
+
+            if (statActive) statActive.textContent = `${activeList.length} Active`;
+            if (tabCount) tabCount.textContent = activeList.length;
+
+            if (activeList.length === 0) {
+                if (noMsg) noMsg.classList.remove('hidden');
                 return;
             }
-            noLeadsMsg.classList.add('hidden');
+            if (noMsg) noMsg.classList.add('hidden');
 
-            filtered.forEach(lead => {
+            activeList.forEach(v => {
+                const diffSec = Math.round((now - (v.lastSeen || now)) / 1000);
+                const isVeryActive = diffSec <= 18;
+                const deviceIcon = v.device === 'Mobile' ? 'smartphone' : 'monitor';
+                const step = v.currentStep || 'Browsing Website';
+
+                let stepBadgeClass = 'bg-slate-800 text-slate-300 border-white/10';
+                if (step.includes('Redirected') || step.includes('Session Room')) {
+                    stepBadgeClass = 'bg-purple-500/20 text-purple-300 border-purple-500/40 animate-pulse';
+                } else if (step.includes('Submitted') || step.includes('Form')) {
+                    stepBadgeClass = 'bg-emerald-500/20 text-brand-neon border-emerald-500/40';
+                } else if (step.includes('Step') || step.includes('Quiz')) {
+                    stepBadgeClass = 'bg-cyan-500/20 text-brand-cyan border-cyan-500/40';
+                } else if (step.includes('CTA')) {
+                    stepBadgeClass = 'bg-amber-500/20 text-brand-amber border-amber-500/40';
+                }
+
+                const card = document.createElement('div');
+                card.className = 'p-3.5 rounded-2xl bg-dark-900 border border-white/10 relative overflow-hidden transition hover:border-brand-neon/40';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full ${isVeryActive ? 'bg-brand-neon animate-ping' : 'bg-slate-500'}"></span>
+                            <span class="font-mono font-bold text-xs text-white">${v.id || 'Visitor'}</span>
+                        </div>
+                        <span class="text-[10px] text-slate-400 flex items-center gap-1">
+                            <i data-lucide="${deviceIcon}" class="w-3 h-3 text-slate-400"></i>
+                            ${v.device || 'Mobile'}
+                        </span>
+                    </div>
+
+                    <div class="mt-1">
+                        <span class="text-[9px] uppercase tracking-wider text-slate-400 block font-semibold">Current Action</span>
+                        <div class="mt-1 px-2 py-1 rounded-lg border text-xs font-semibold ${stepBadgeClass} truncate" title="${step}">
+                            ${step}
+                        </div>
+                    </div>
+
+                    <div class="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400">
+                        <span>Dwell: <strong class="text-white">${v.dwellSeconds ? (v.dwellSeconds + 's') : '< 1m'}</strong></span>
+                        <span class="text-brand-neon font-semibold">${isVeryActive ? '🟢 Active now' : diffSec + 's ago'}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function renderLiveStream(streamMap) {
+            const feed = document.getElementById('liveStreamFeed');
+            const emptyMsg = document.getElementById('emptyStreamMsg');
+            const statActions = document.getElementById('statTotalActions');
+            const tabCount = document.getElementById('tabCountStream');
+            if (!feed) return;
+
+            const items = Object.keys(streamMap).map(k => streamMap[k]);
+            items.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+            if (statActions) statActions.textContent = items.length;
+            if (tabCount) tabCount.textContent = items.length;
+
+            if (items.length > lastStreamCount && lastStreamCount > 0) {
+                playAlertBeep(520, 0.12);
+            }
+            lastStreamCount = items.length;
+
+            if (items.length === 0) {
+                if (emptyMsg) emptyMsg.classList.remove('hidden');
+                feed.innerHTML = '';
+                return;
+            }
+            if (emptyMsg) emptyMsg.classList.add('hidden');
+
+            feed.innerHTML = '';
+            items.slice(0, 80).forEach(item => {
+                const action = item.action || 'Event';
+                let badgeClass = 'bg-slate-800 text-slate-300 border-white/10';
+
+                if (action.includes('Redirected') || action.includes('Session Room')) {
+                    badgeClass = 'bg-purple-500/20 text-purple-300 border-purple-500/40 font-bold';
+                } else if (action.includes('Submitted') || action.includes('Lead')) {
+                    badgeClass = 'bg-emerald-500/20 text-brand-neon border-emerald-500/40 font-bold';
+                } else if (action.includes('Step') || action.includes('Quiz')) {
+                    badgeClass = 'bg-cyan-500/20 text-brand-cyan border-cyan-500/40';
+                } else if (action.includes('CTA')) {
+                    badgeClass = 'bg-amber-500/20 text-brand-amber border-amber-500/40 font-semibold';
+                }
+
+                const div = document.createElement('div');
+                div.className = 'p-2.5 rounded-xl bg-dark-900 border border-white/5 flex items-center justify-between text-xs hover:border-white/20 transition';
+                div.innerHTML = `
+                    <div class="flex items-center gap-2.5 overflow-hidden">
+                        <span class="text-[10px] font-mono text-slate-500 whitespace-nowrap">${item.time || ''}</span>
+                        <span class="text-[10px] font-mono font-bold text-slate-300 px-1.5 py-0.5 rounded bg-white/5 whitespace-nowrap">${item.visitorId || 'User'}</span>
+                        <span class="px-2 py-0.5 rounded-md border text-[11px] ${badgeClass} truncate">${action}</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 whitespace-nowrap ml-2">${item.device || 'Mobile'}</span>
+                `;
+                feed.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function renderLiveLeads(firebaseLeadsMap) {
+            const statLeads = document.getElementById('statTotalLeads');
+            const tabCount = document.getElementById('tabCountLeads');
+
+            const fbLeads = Object.keys(firebaseLeadsMap).map(k => firebaseLeadsMap[k]);
+            const localLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
+
+            const seenPhones = new Set();
+            cachedLeads = [];
+
+            [...fbLeads, ...localLeads].forEach(l => {
+                const phoneKey = (l.phone || '').replace(/\D/g, '');
+                if (phoneKey && !seenPhones.has(phoneKey)) {
+                    seenPhones.add(phoneKey);
+                    cachedLeads.push(l);
+                }
+            });
+
+            cachedLeads.sort((a, b) => (b.timestamp || '').localeCompare(a.timestamp || ''));
+
+            if (statLeads) statLeads.textContent = cachedLeads.length;
+            if (tabCount) tabCount.textContent = cachedLeads.length;
+
+            displayFilteredLeads(cachedLeads);
+        }
+
+        function displayFilteredLeads(list) {
+            const tbody = document.getElementById('liveLeadsTableBody');
+            const noMsg = document.getElementById('noLiveLeadsMsg');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            if (list.length === 0) {
+                if (noMsg) noMsg.classList.remove('hidden');
+                return;
+            }
+            if (noMsg) noMsg.classList.add('hidden');
+
+            list.forEach(lead => {
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-white/5 transition';
                 tr.innerHTML = `
-                    <td class="p-2.5 text-slate-400 text-[11px] whitespace-nowrap">${lead.timestamp || '-'}</td>
-                    <td class="p-2.5 font-bold text-white whitespace-nowrap">${lead.name || '-'}</td>
-                    <td class="p-2.5 text-brand-neon font-semibold whitespace-nowrap">
+                    <td class="p-2 text-slate-400 text-[10px] whitespace-nowrap">${lead.timestamp || '-'}</td>
+                    <td class="p-2 font-bold text-white whitespace-nowrap">${lead.name || '-'}</td>
+                    <td class="p-2 text-brand-neon font-semibold whitespace-nowrap font-mono">
                         <a href="https://wa.me/91${lead.phone}" target="_blank" class="hover:underline flex items-center gap-1">
                             +91 ${lead.phone || '-'}
                         </a>
                     </td>
-                    <td class="p-2.5 text-slate-300 whitespace-nowrap">${lead.city || '-'}</td>
-                    <td class="p-2.5 text-slate-300 max-w-[150px] truncate" title="${lead.segment || ''}">${lead.segment || '-'}</td>
-                    <td class="p-2.5 text-center">
-                        <a href="https://wa.me/91${lead.phone}?text=Hello%20${encodeURIComponent(lead.name || '')},%20Trade%20With%20Yogesh%20SEBI%20Registered%20live%20analysis%20session%20details:" target="_blank" class="px-2 py-1 bg-emerald-500/20 text-brand-neon hover:bg-emerald-500/30 rounded font-bold text-[10px] inline-flex items-center gap-1">
+                    <td class="p-2 text-slate-300 whitespace-nowrap">${lead.city || '-'}</td>
+                    <td class="p-2 text-slate-300 max-w-[130px] truncate" title="${lead.segment || ''}">${lead.segment || '-'}</td>
+                    <td class="p-2 text-center whitespace-nowrap">
+                        <a href="https://wa.me/91${lead.phone}?text=Hello%20${encodeURIComponent(lead.name || '')},%20Trade%20With%20Yogesh%20SEBI%20Registered%20Live%20Analysis%20Session%20details:" target="_blank" class="px-2 py-1 bg-emerald-500/20 text-brand-neon hover:bg-emerald-500/30 rounded font-bold text-[10px] inline-flex items-center gap-1">
                             Chat WhatsApp
                         </a>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
+            lucide.createIcons();
         }
 
-        function filterAdminLeads() {
-            const query = document.getElementById('leadSearchInput').value.trim();
-            renderAdminLeadsTable(query);
+        function filterLiveLeads() {
+            const q = (document.getElementById('liveLeadSearch')?.value || '').toLowerCase().trim();
+            const filtered = cachedLeads.filter(l => 
+                (l.name || '').toLowerCase().includes(q) ||
+                (l.phone || '').includes(q) ||
+                (l.city || '').toLowerCase().includes(q)
+            );
+            displayFilteredLeads(filtered);
         }
 
-        function exportLeadsToCSV() {
-            const storedLeads = JSON.parse(localStorage.getItem('trading_leads') || '[]');
-            if (storedLeads.length === 0) {
-                alert('No leads available to export!');
+        function exportLiveLeadsCSV() {
+            if (cachedLeads.length === 0) {
+                alert('No leads to export!');
                 return;
             }
-
-            const headers = ['ID', 'Date & Time', 'Full Name', 'WhatsApp Number', 'City', 'Market Segment', 'Frustration', 'Goal'];
-            const rows = storedLeads.map(lead => [
-                `"${lead.id || ''}"`,
-                `"${lead.timestamp || ''}"`,
-                `"${(lead.name || '').replace(/"/g, '""')}"`,
-                `"+91 ${lead.phone || ''}"`,
-                `"${(lead.city || '').replace(/"/g, '""')}"`,
-                `"${(lead.segment || '').replace(/"/g, '""')}"`,
-                `"${(lead.frustration || '').replace(/"/g, '""')}"`,
-                `"${(lead.goal || '').replace(/"/g, '""')}"`
+            const headers = ['Date & Time', 'Full Name', 'WhatsApp Number', 'City', 'Market Segment', 'Frustration', 'Goal'];
+            const rows = cachedLeads.map(l => [
+                `"${l.timestamp || ''}"`,
+                `"${(l.name || '').replace(/"/g, '""')}"`,
+                `"+91 ${l.phone || ''}"`,
+                `"${(l.city || '').replace(/"/g, '""')}"`,
+                `"${(l.segment || '').replace(/"/g, '""')}"`,
+                `"${(l.frustration || '').replace(/"/g, '""')}"`,
+                `"${(l.goal || '').replace(/"/g, '""')}"`
             ]);
-
-            const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-            const encodedUri = encodeURI(csvContent);
+            const csv = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
             const link = document.createElement("a");
-            const dateStr = new Date().toISOString().slice(0, 10);
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `trading_leads_${dateStr}.csv`);
+            link.setAttribute("href", encodeURI(csv));
+            link.setAttribute("download", `trader_leads_${new Date().toISOString().slice(0, 10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        function clearAllLeads() {
-            if (confirm("Are you sure you want to clear all saved leads from this browser? Make sure you downloaded the CSV first!")) {
-                localStorage.removeItem('trading_leads');
-                renderAdminLeadsTable();
+        function clearFirebaseLogs() {
+            if (confirm("Are you sure you want to clear the Live Action Stream in Firebase?")) {
+                if (rtdb) {
+                    rtdb.ref('live_stream').remove().then(() => {
+                        alert("Live action stream cleared!");
+                    });
+                }
             }
         }
 
         // Initialize Page
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
+
+            // Initialize live presence tracking for genuine visitors
+            initVisitorPresence();
+
+            // Scroll milestone tracker
+            let hasTrackedScroll = false;
+            window.addEventListener('scroll', () => {
+                if (!hasTrackedScroll) {
+                    const scrollPct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+                    if (scrollPct > 0.45) {
+                        hasTrackedScroll = true;
+                        trackLiveAction('Scrolled Page (Curriculum / Disclosures)');
+                    }
+                }
+            }, { passive: true });
+
+            // Triple click secret trigger on footer copyright
+            let secretClickCount = 0;
+            let secretClickTimer = null;
+            document.getElementById('adminSecretTrigger')?.addEventListener('click', () => {
+                secretClickCount++;
+                clearTimeout(secretClickTimer);
+                if (secretClickCount >= 3) {
+                    secretClickCount = 0;
+                    openLeadsAdminModal();
+                } else {
+                    secretClickTimer = setTimeout(() => { secretClickCount = 0; }, 1500);
+                }
+            });
 
             // Close modals when clicking backdrop
             document.getElementById('quizModal')?.addEventListener('click', (e) => {
@@ -1295,8 +1811,12 @@
                 if (e.target.id === 'leadsAdminModal') closeLeadsAdminModal();
             });
 
-            // Close on Escape key
+            // Keyboard Shortcuts (Ctrl+Shift+L to open, Escape to close)
             document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.shiftKey && (e.key === 'L' || e.key === 'l')) {
+                    e.preventDefault();
+                    openLeadsAdminModal();
+                }
                 if (e.key === 'Escape') {
                     closeQuizModal();
                     closeLegalModal();
@@ -1305,7 +1825,7 @@
             });
 
             if (isAdminParam) {
-                setTimeout(openLeadsAdminModal, 500);
+                setTimeout(openLeadsAdminModal, 400);
             }
         });
     </script>
