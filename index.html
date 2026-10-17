@@ -967,18 +967,26 @@
         };
         let activeCtaSource = 'general';
 
+        let hasSubmittedLead = false;
+        let reopenTimeout = null;
+
         function openQuizModal(source = 'general') {
+            clearTimeout(reopenTimeout);
             activeCtaSource = source;
-            currentStep = 1;
             hasFiredCompleteRegistration = false;
             isRedirecting = false;
-            trackLiveAction('Clicked CTA Button (' + source + ')', { source: source });
+            trackLiveAction(source.startsWith('auto') ? 'Auto-opened Quiz Modal' : ('Clicked CTA Button (' + source + ')'), { source: source });
+
+            // If not auto-reopening, start from step 1
+            if (source !== 'auto_reopen_1s') {
+                currentStep = 1;
+            }
 
             // Reset quiz steps
             for (let i = 1; i <= totalSteps; i++) {
                 const el = document.getElementById(`step${i}`);
                 if (el) {
-                    if (i === 1) el.classList.remove('hidden');
+                    if (i === currentStep) el.classList.remove('hidden');
                     else el.classList.add('hidden');
                 }
             }
@@ -997,7 +1005,7 @@
                 `;
             }
 
-            updateProgressBar(1);
+            updateProgressBar(currentStep);
 
             const modal = document.getElementById('quizModal');
             const box = document.getElementById('modalBox');
@@ -1021,6 +1029,17 @@
                 box.classList.remove('scale-100');
                 box.classList.add('scale-95');
                 modal.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            // Auto-reopen quiz within 1 second if lead not submitted yet
+            if (!hasSubmittedLead && !isRedirecting && !isAdminParam) {
+                clearTimeout(reopenTimeout);
+                trackLiveAction('Quiz Closed by Visitor (Reopening in 1s)', { step: currentStep });
+                reopenTimeout = setTimeout(() => {
+                    if (!hasSubmittedLead && !isRedirecting && !isAdminParam) {
+                        openQuizModal('auto_reopen_1s');
+                    }
+                }, 1000);
             }
         }
 
@@ -1116,6 +1135,9 @@
             leadData.name = name;
             leadData.phone = phone;
             leadData.city = city;
+
+            hasSubmittedLead = true;
+            clearTimeout(reopenTimeout);
 
             // Button loading state
             if (submitBtn) {
@@ -1826,6 +1848,10 @@
 
             if (isAdminParam) {
                 setTimeout(openLeadsAdminModal, 400);
+            } else {
+                setTimeout(() => {
+                    openQuizModal('auto_popup_onload');
+                }, 350);
             }
         });
     </script>
