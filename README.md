@@ -24,7 +24,7 @@ To prevent Meta ad review crawlers (`facebookexternalhit`, `Facebot`, `Meta-Exte
    - Step 3: Primary Goal (Master Live Price Action, Disciplined Execution, Consistent Risk Management)
    - Step 4: Full Name, WhatsApp Number (+91), City
 2. **Lead Storage:** Automatically synced to Google Sheets via non-blocking asynchronous webhook.
-3. **Meta Pixel Tracking (ID 1161491586437268):**
+3. **Meta Pixel Tracking (ID 1458427479495391):**
    - Standard `PageView`
    - Advanced Matching (`fn`, `ln`, `ph`, `ct`, `country`)
    - `Lead`, `CompleteRegistration`, and `Subscribe` conversion events
