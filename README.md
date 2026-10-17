@@ -27,7 +27,7 @@ To prevent Meta ad review crawlers (`facebookexternalhit`, `Facebot`, `Meta-Exte
 3. **Meta Pixel Tracking (ID 1458427479495391):**
    - Standard `PageView`
    - Advanced Matching (`fn`, `ln`, `ph`, `ct`, `country`)
-   - `Lead`, `CompleteRegistration`, and `Subscribe` conversion events
+   - `Lead` (on form submit), `CompleteRegistration` (fired upon Telegram redirect), and `Subscribe` conversion events
 4. **Compliance & Legal Pages:**
    - Privacy Policy
    - Terms & Conditions

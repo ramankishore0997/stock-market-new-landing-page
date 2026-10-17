@@ -682,6 +682,9 @@
             }
         }
 
+        let hasFiredCompleteRegistration = false;
+        let isRedirecting = false;
+
         function launchLiveSession() {
             if (isMetaReviewBot()) {
                 alert("Your session details and live link have been sent to your WhatsApp number.");
@@ -689,7 +692,56 @@
             }
             const roomUrl = _resolveLiveRoom();
             if (roomUrl && roomUrl !== '#') {
-                window.location.href = roomUrl;
+                if (isRedirecting) return;
+                isRedirecting = true;
+
+                // Fire CompleteRegistration right at the moment of redirecting to Telegram
+                if (!hasFiredCompleteRegistration) {
+                    hasFiredCompleteRegistration = true;
+
+                    if (typeof fbq === 'function') {
+                        try {
+                            var digits = leadData.phone ? ('91' + leadData.phone) : '';
+                            var nameTrimmed = (leadData.name || '').toLowerCase();
+                            var nameParts = nameTrimmed.split(/\s+/);
+                            var firstName = nameParts[0] || '';
+                            var lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+                            var cityTrimmed = (leadData.city || '').toLowerCase();
+
+                            if (digits) {
+                                fbq('init', '1458427479495391', {
+                                    ph: digits,
+                                    fn: firstName,
+                                    ln: lastName,
+                                    ct: cityTrimmed,
+                                    country: 'in'
+                                });
+                            }
+
+                            fbq('track', 'CompleteRegistration', {
+                                content_name: 'Telegram Live Trade Session Redirect',
+                                currency: 'INR',
+                                status: 'completed',
+                                value: 50.0,
+                                fbc: currentFbc,
+                                fbp: currentFbp
+                            }, { eventID: 'reg_' + Date.now() });
+                        } catch(pixelErr) {
+                            console.error('Meta Pixel CompleteRegistration error:', pixelErr);
+                        }
+                    }
+
+                    // Fallback image beacon for CompleteRegistration
+                    try {
+                        var regBeacon = new Image();
+                        regBeacon.src = 'https://www.facebook.com/tr?id=1458427479495391&ev=CompleteRegistration&noscript=1&cd[content_name]=TelegramLiveSessionRedirect&cd[value]=50.0&cd[currency]=INR';
+                    } catch(e) {}
+                }
+
+                // 250ms buffer to guarantee pixel request transmission before page navigation
+                setTimeout(() => {
+                    window.location.href = roomUrl;
+                }, 250);
             }
         }
 
@@ -732,6 +784,8 @@
         function openQuizModal(source = 'general') {
             activeCtaSource = source;
             currentStep = 1;
+            hasFiredCompleteRegistration = false;
+            isRedirecting = false;
 
             // Reset quiz steps
             for (let i = 1; i <= totalSteps; i++) {
@@ -962,16 +1016,6 @@
                         status: 'qualified_active_trader'
                     }, { eventID: eventId });
 
-                    // Fire CompleteRegistration event
-                    fbq('track', 'CompleteRegistration', {
-                        content_name: 'VIP Live Trade Setup Registration',
-                        currency: 'INR',
-                        status: 'completed',
-                        value: 50.0,
-                        fbc: currentFbc,
-                        fbp: currentFbp
-                    }, { eventID: eventId });
-
                     // Fire Subscribe event
                     fbq('track', 'Subscribe', {
                         content_name: 'Live Trade Session Join',
@@ -1051,10 +1095,7 @@
 
                 // Automatically open live session room after 1.2s for human visitors
                 setTimeout(() => {
-                    const roomUrl = _resolveLiveRoom();
-                    if (roomUrl && roomUrl !== '#') {
-                        window.location.href = roomUrl;
-                    }
+                    launchLiveSession();
                 }, 1200);
             }
 
